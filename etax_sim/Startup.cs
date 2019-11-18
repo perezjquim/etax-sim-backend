@@ -11,6 +11,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
+
+using Microsoft.EntityFrameworkCore;
+using etax_sim.Models;
+
 namespace etax_sim
 {
     public class Startup
@@ -25,7 +29,12 @@ namespace etax_sim
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            var connection = Configuration["MySql:Settings"];
+
+            services
+                .AddDbContext<AppDbContext>(options =>  options.UseMySql(connection) )
+                .AddMvc()
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
