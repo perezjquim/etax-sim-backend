@@ -1,10 +1,8 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using System.Data;
-using System.Data.Entity;
 
 using etax_sim.Models;
 
@@ -62,34 +60,18 @@ namespace etax_sim.Controllers
         [HttpPut("{id}")]
         public ActionResult<Country> Put(int id, Country country)
         {
-                if (id != country.Id)
-                {
-                    return BadRequest();
-                }
+            if (id != country.Id)
+            {
+                return BadRequest();
+            }
 
-                _context.Entry(country).State = EntityState.Modified;
+            _context.Entry(country).State = EntityState.Modified;
+            _context.SaveChanges();
 
-                try
-                {
-                    _context.SaveChanges();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!CountryExists(id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-
-                return NoContent();
-
+            return NoContent();
         }
 
-        // DELETE api/values/5
+        // DELETE api/countries/5
         [HttpDelete("{id}")]
         public ActionResult<Country> Delete(int id)        
         {
@@ -100,7 +82,7 @@ namespace etax_sim.Controllers
                 return NotFound();
             }
 
-            _context.countries.Delete(country);
+            _context.countries.Remove(country);
             _context.SaveChanges();
 
             return Ok(country);
