@@ -1,4 +1,3 @@
-using System;
 namespace etax_sim.Models
 {
     public class Country
