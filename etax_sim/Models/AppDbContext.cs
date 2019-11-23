@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+
 namespace etax_sim.Models
 {
     public class AppDbContext : DbContext
@@ -6,6 +7,8 @@ namespace etax_sim.Models
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
         }
+
         public DbSet<Country> countries { get; set; }
+        public DbSet<Region> regions { get; set; }
     }
 }

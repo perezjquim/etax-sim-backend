@@ -27,13 +27,17 @@ namespace etax_sim
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        public void ConfigureServices(IServiceCollection  services)
         {
             var connection = Configuration["MySql:Settings"];
 
             services
                 .AddDbContext<AppDbContext>(options =>  options.UseMySql(connection) )
                 .AddMvc()
+                .AddJsonOptions(options =>
+                {
+                    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+                })          
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 

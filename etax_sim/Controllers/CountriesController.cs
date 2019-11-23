@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System;
 
 using etax_sim.Models;
 
@@ -23,7 +24,7 @@ namespace etax_sim.Controllers
         [HttpGet]
         public ActionResult<List<Country>> Get()
         {
-            var list = _context.countries.ToList();
+            var list = _context.countries.Include("Regions").ToList();
 
             if (list == null)
             {
@@ -38,6 +39,7 @@ namespace etax_sim.Controllers
         public ActionResult<Country> Get(int id)
         {
             var country = _context.countries.Find(id);
+            _context.Entry(country).Collection("Regions").Load();
 
             if (country == null)
             {
@@ -53,14 +55,14 @@ namespace etax_sim.Controllers
         {
             _context.countries.Add(country);
             _context.SaveChanges();
-            return CreatedAtAction(nameof(Get), new { id = country.Id }, country);
+            return CreatedAtAction(nameof(Get), new { Id = country.CountryId }, country);
         }
 
         // PUT api/countries/5
         [HttpPut("{id}")]
         public ActionResult<Country> Put(int id, Country country)
         {
-            if (id != country.Id)
+            if (id != country.CountryId)
             {
                 return BadRequest();
             }
