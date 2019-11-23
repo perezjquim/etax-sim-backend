@@ -5,14 +5,14 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace etax_sim.Models
 {
-    [Table("Region")]
-    public class Region
+    [Table("Role")]
+    public class Role
     {
         [Key]
-        [Column("ID")]           
+        [Column("ID")]                
         public int Id { get; set; }
 
-        [Column("Name")]        
+        [Column("Name")]                
         public string Name { get; set; }
 
         [Column("Description")]                
@@ -27,10 +27,8 @@ namespace etax_sim.Models
         [Column("ModifiedAt")]                
         public DateTime ModifiedAt { get; set; }        
 
-        [Column("CountryId")]        
-        public int CountryId { get; set; }
-        public Country Country { get; set; }       
-
-        public ICollection<Company> Companies { get; set; }         
+        [Column("CompanyId")]        
+        public int CompanyId { get; set; }
+        public Company Company { get; set; }
     }
 }

@@ -1,0 +1,24 @@
+using System;
+using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace etax_sim.Models
+{
+	[Table("SimulationParamRule")]
+    public class SimulationParamRule
+    {
+    	[Key]
+    	[Column("ID")]
+        public int Id { get; set; }
+
+        [Column("ParamName")]
+        public String ParamName { get; set; }
+
+        [Column("Min")]
+        public int Min { get; set; }
+
+	[Column("Max")]        
+        public int Max { get; set; }
+    }
+}
