@@ -12,6 +12,9 @@ namespace etax_sim.Models
         [Column("ID")]
         public int Id { get; set; }
 
+        [Column("SimulationType")]
+        public string SimulationType { get; set; }
+
         [Column("CreatedAt")]
         public DateTime CreatedAt { get; set; }
 
@@ -25,9 +28,7 @@ namespace etax_sim.Models
         [Column("RoleId")]
         public int RoleId { get; set; }
         public Role Role { get; set; }           
-
-        // TODO - SIMULATION TYPE 
-
+        
         public ICollection<SimulationLogParam> Params { get; set; }        
     }
 }

@@ -8,7 +8,8 @@ namespace etax_sim.Models
         {
         }
 
-        public DbSet<CalcTableIRS_PT> mCalcIRSPT { get; set; }
+        public DbSet<CalcPT_IRSPens> mCalcPTIRSPens { get; set; }
+        public DbSet<CalcPT_IRSTrabDep> mCalcPTIRSTrabDep { get; set; }        
         public DbSet<Company> mCompanies { get; set; }                
         public DbSet<Country> mCountries { get; set; }
         public DbSet<Region> mRegions { get; set; }

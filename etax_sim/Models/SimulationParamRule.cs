@@ -15,10 +15,10 @@ namespace etax_sim.Models
         [Column("ParamName")]
         public String ParamName { get; set; }
 
-        [Column("Min")]
-        public int Min { get; set; }
+        [Column("MinValue")]
+        public double MinValue { get; set; }
 
-	[Column("Max")]        
-        public int Max { get; set; }
+	[Column("MaxValue")]        
+        public double MaxValue { get; set; }
     }
 }
