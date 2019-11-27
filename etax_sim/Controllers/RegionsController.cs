@@ -66,7 +66,7 @@ namespace etax_sim.Controllers
             _mContext.mCountries.Remove(region);
             _mContext.SaveChanges();
 
-            return Ok(region);
+            return NoContent();
         }
     }
 }
