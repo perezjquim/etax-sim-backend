@@ -5,8 +5,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace etax_sim.Models
 {
-    [Table("Country")]
-    public class Country
+    [Table("Sector")]
+    public class Sector
     {
         [Key]
         [Column("ID")]
@@ -18,15 +18,15 @@ namespace etax_sim.Models
         [Column("Description")]
         public string Description { get; set; }
 
-        [Column("IsActive")]
+        [Column("IsActive")]        
         public bool IsActive { get; set; }
 
-        [Column("CreatedAt")]
+        [Column("CreatedAt")]        
         public DateTime CreatedAt { get; set; }
 
-        [Column("ModifiedAt")]
+        [Column("ModifiedAt")]        
         public DateTime ModifiedAt { get; set; }
 
-        public ICollection<Region> Regions { get; set; }
+        public ICollection<Company> Companies { get; set; }        
     }
 }
