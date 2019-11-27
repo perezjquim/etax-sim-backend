@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System;
-
 using etax_sim.Models;
 
 namespace etax_sim.Controllers
@@ -13,20 +12,20 @@ namespace etax_sim.Controllers
     [ApiController]
     public class CountriesController : ControllerBase
     {
-        private readonly AppDbContext mContext;
+        private readonly AppDbContext _mContext;
 
         public CountriesController(AppDbContext aContext)
         {
-            mContext = aContext;
+            _mContext = aContext;
         }
 
         // GET api/countries
         [HttpGet]
         public ActionResult<List<Country>> Get()
         {
-            var list = mContext.mCountries.Include("Regions").ToList();
+            var list = _mContext.mCountries.Include("Regions").ToList();
 
-            if (list == null)
+            if (list.Count < 1)
             {
                 return NotFound();
             }
@@ -35,17 +34,13 @@ namespace etax_sim.Controllers
         }
 
         // GET api/countries/5
-        [HttpGet("{id}")]
+        [HttpGet("{aId}")]
         public ActionResult<Country> Get(int aId)
         {
-            var country = mContext.mCountries.Find(aId);
-            mContext.Entry(country).Collection("Regions").Load();
+            var country = _mContext.mCountries.Find(aId);
+            if (country == null) return NotFound();
 
-            if (country == null)
-            {
-                return NotFound();
-            }
-
+            _mContext.Entry(country).Collection("Regions").Load();
             return Ok(country);
         }
 
@@ -53,41 +48,35 @@ namespace etax_sim.Controllers
         [HttpPost]
         public ActionResult<Country> Post(Country aCountry)
         {
-            mContext.mCountries.Add(aCountry);
-            mContext.SaveChanges();
-            return CreatedAtAction(nameof(Get), new { Id = aCountry.Id }, aCountry);
+            _mContext.mCountries.Add(aCountry);
+            _mContext.SaveChanges();
+            return CreatedAtAction(nameof(Get), new {Id = aCountry.Id}, aCountry);
         }
 
         // PUT api/countries/5
         [HttpPut("{id}")]
         public ActionResult<Country> Put(int aId, Country aCountry)
         {
-            if (aId != aCountry.Id)
-            {
-                return BadRequest();
-            }
+            if (aId != aCountry.Id) return BadRequest();
 
-            mContext.Entry(aCountry).State = EntityState.Modified;
-            mContext.SaveChanges();
+            _mContext.Entry(aCountry).State = EntityState.Modified;
+            _mContext.SaveChanges();
 
             return NoContent();
         }
 
         // DELETE api/countries/5
-        [HttpDelete("{id}")]
+        [HttpDelete("{aId}")]
         public ActionResult<Country> Delete(int aId)
         {
-            var country = mContext.mCountries.Find(aId);
+            var country = _mContext.mCountries.Find(aId);
 
-            if (country == null)
-            {
-                return NotFound();
-            }
+            if (country == null) return NotFound();
 
-            mContext.mCountries.Remove(country);
-            mContext.SaveChanges();
+            _mContext.mCountries.Remove(country);
+            _mContext.SaveChanges();
 
-            return Ok(country);
+            return NoContent();
         }
     }
 }
