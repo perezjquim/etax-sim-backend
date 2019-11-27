@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System;
-
 using etax_sim.Models;
 
 namespace etax_sim.Controllers
@@ -26,7 +25,7 @@ namespace etax_sim.Controllers
         {
             var list = mContext.mCountries.Include("Regions").ToList();
 
-            if (list == null)
+            if (list.Count < 1)
             {
                 return NotFound();
             }
@@ -35,17 +34,13 @@ namespace etax_sim.Controllers
         }
 
         // GET api/countries/5
-        [HttpGet("{id}")]
+        [HttpGet("{aId}")]
         public ActionResult<Country> Get(int aId)
         {
             var country = mContext.mCountries.Find(aId);
+            if (country == null) return NotFound();
+
             mContext.Entry(country).Collection("Regions").Load();
-
-            if (country == null)
-            {
-                return NotFound();
-            }
-
             return Ok(country);
         }
 
@@ -55,17 +50,14 @@ namespace etax_sim.Controllers
         {
             mContext.mCountries.Add(aCountry);
             mContext.SaveChanges();
-            return CreatedAtAction(nameof(Get), new { Id = aCountry.Id }, aCountry);
+            return CreatedAtAction(nameof(Get), new {Id = aCountry.Id}, aCountry);
         }
 
         // PUT api/countries/5
         [HttpPut("{id}")]
         public ActionResult<Country> Put(int aId, Country aCountry)
         {
-            if (aId != aCountry.Id)
-            {
-                return BadRequest();
-            }
+            if (aId != aCountry.Id) return BadRequest();
 
             mContext.Entry(aCountry).State = EntityState.Modified;
             mContext.SaveChanges();
@@ -74,15 +66,13 @@ namespace etax_sim.Controllers
         }
 
         // DELETE api/countries/5
-        [HttpDelete("{id}")]
+        [HttpDelete("{aId}")]
         public ActionResult<Country> Delete(int aId)
         {
             var country = mContext.mCountries.Find(aId);
 
-            if (country == null)
-            {
-                return NotFound();
-            }
+            if (country == null) return NotFound();
+
 
             mContext.mCountries.Remove(country);
             mContext.SaveChanges();
