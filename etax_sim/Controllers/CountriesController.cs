@@ -73,7 +73,6 @@ namespace etax_sim.Controllers
 
             if (country == null) return NotFound();
 
-
             mContext.mCountries.Remove(country);
             mContext.SaveChanges();
 
