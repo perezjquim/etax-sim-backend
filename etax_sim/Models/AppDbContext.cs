@@ -1,7 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace etax_sim.Models {
-    public class AppDbContext : DbContext {
+namespace etax_sim.Models
+{
+    public class AppDbContext : DbContext
+    {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
         public DbSet<CalcPT_IRSPens> mCalcPTIRSPens { get; set; }

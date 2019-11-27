@@ -8,24 +8,17 @@ namespace etax_sim.Models
     [Table("Country")]
     public class Country
     {
-        [Key]
-        [Column("ID")]
-        public int Id { get; set; }
+        [Key] [Column("ID")] public int Id { get; set; }
 
-        [Column("Name")]
-        public string Name { get; set; }
+        [Column("Name")] public string Name { get; set; }
 
-        [Column("Description")]
-        public string Description { get; set; }
+        [Column("Description")] public string Description { get; set; }
 
-        [Column("IsActive")]
-        public bool IsActive { get; set; }
+        [Column("IsActive")] public bool IsActive { get; set; }
 
-        [Column("CreatedAt")]
-        public DateTime CreatedAt { get; set; }
+        [Column("CreatedAt")] public DateTime CreatedAt { get; set; }
 
-        [Column("ModifiedAt")]
-        public DateTime ModifiedAt { get; set; }
+        [Column("ModifiedAt")] public DateTime ModifiedAt { get; set; }
 
         public ICollection<Region> Regions { get; set; }
     }
