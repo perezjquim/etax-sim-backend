@@ -26,8 +26,7 @@ namespace etax_sim.Controllers
             return Ok(regions);
         }
 
-        // GET api/countries/5
-        [HttpGet("{aIdid}")]
+        [HttpGet("{aId}")]
         public ActionResult<Region> Get(int aId)
         {
             var region = _mContext.mRegions.Find(aId);
@@ -37,7 +36,6 @@ namespace etax_sim.Controllers
             return Ok(region);
         }
 
-        // POST api/countries
         [HttpPost]
         public ActionResult<Region> Post(Region aRegion)
         {
@@ -47,7 +45,6 @@ namespace etax_sim.Controllers
             return CreatedAtAction(nameof(Get), new { aRegion.Id }, aRegion);
         }
 
-        // PUT api/countries/5
         [HttpPut("{aId}")]
         public ActionResult<Region> Put(int aId, Region aRegion)
         {
@@ -59,7 +56,6 @@ namespace etax_sim.Controllers
             return NoContent();
         }
 
-        // DELETE api/countries/5
         [HttpDelete("{aId}")]
         public ActionResult<Region> Delete(int aId)
         {
