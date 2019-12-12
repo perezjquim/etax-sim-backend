@@ -27,17 +27,18 @@ namespace etax_sim
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection  services)
+        public void ConfigureServices(IServiceCollection services)
         {
             var connection = Configuration["MySql:Settings"];
 
             services
-                .AddDbContext<AppDbContext>(options =>  options.UseMySql(connection) )
+                .AddCors()
+                .AddDbContext<AppDbContext>(options => options.UseMySql(connection))
                 .AddMvc()
                 .AddJsonOptions(options =>
                 {
                     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
-                })          
+                })
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
@@ -53,6 +54,10 @@ namespace etax_sim
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            app.UseCors(
+                options => options.WithOrigins("*").AllowAnyMethod()
+            );
 
             app.UseHttpsRedirection();
             app.UseMvc();
