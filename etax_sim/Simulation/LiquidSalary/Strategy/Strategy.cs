@@ -10,7 +10,7 @@ namespace eTaxSim.Simulation.LiquidSalary.Strategy
 
         public bool ValidateStrategyParam()
         {
-            
+            return true;
 
         }
 
