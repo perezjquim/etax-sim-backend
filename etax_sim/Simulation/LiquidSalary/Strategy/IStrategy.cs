@@ -9,7 +9,9 @@ namespace eTaxSim.Simulation.LiquidSalary.Strategy
 
         bool ValidateStrategyParam();
 
-        IDictionary<string, string> parametersDictionary { get; set; }
+        IDictionary<string, string> GetParametersDictionary();
+
+        void SetParametersDictionary();
 
 
 
