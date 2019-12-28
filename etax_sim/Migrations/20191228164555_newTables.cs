@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace etax_sim.Migrations
+namespace eTaxSim.Migrations
 {
     public partial class newTables : Migration
     {

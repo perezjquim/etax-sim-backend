@@ -2,9 +2,9 @@
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
-using etax_sim.Models;
+using eTaxSim.Models;
 
-namespace etax_sim.Controllers
+namespace eTaxSim.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

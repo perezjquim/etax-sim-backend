@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using etax_sim.Models;
+using eTaxSim.Models;
 
-namespace etax_sim.Migrations
+namespace eTaxSim.Migrations
 {
     [DbContext(typeof(AppDbContext))]
     [Migration("20191123224453_23112019")]

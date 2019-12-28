@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace etax_sim.Migrations
+namespace eTaxSim.Migrations
 {
     public partial class _23112019 : Migration
     {
