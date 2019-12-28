@@ -9,13 +9,13 @@ namespace eTaxSim.Models
     {
         [Key] [Column("ID")] public int Id { get; set; }
 
-        [Column("CountryId")] public String CountryId { get; set; }
+        [Column("CountryId")] public int CountryId { get; set; }
 
         [Column("RegionId")] public int RegionId { get; set; }
 
         [Column("StrategyId")] public int StrategyId { get; set; }
 
-        [Column("Description")] public double Description { get; set; }
+        [Column("Description")] public String Description { get; set; }
 
         public Country Country { get; set; }
 

@@ -9,11 +9,11 @@ namespace eTaxSim.Models
     {
         [Key] [Column("ID")] public int Id { get; set; }
 
-        [Column("StrategyId")] public String StrategyId { get; set; }
+        [Column("StrategyId")] public int StrategyId { get; set; }
 
-        [Column("SimulationParamRuleId")] public double SimulationParamRuleId { get; set; }
+        [Column("SimulationParamRuleId")] public int SimulationParamRuleId { get; set; }
 
-        [Column("ParamName")] public double ParamName { get; set; }
+        [Column("ParamName")] public String ParamName { get; set; }
 
         [Column("ParamValue")] public double ParamValue { get; set; }
 
