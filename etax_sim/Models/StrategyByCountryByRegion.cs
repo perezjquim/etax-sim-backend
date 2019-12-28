@@ -18,10 +18,10 @@ namespace etax_sim.Models
 
         [Column("Description")] public double Description { get; set; }
 
-        public ICollection<Country> Country { get; set; }
+        public Country Country { get; set; }
 
-        public ICollection<Region> Region { get; set; }
+        public Region Region { get; set; }
 
-        public ICollection<Strategy> Strategy { get; set; }
+        public Strategy Strategy { get; set; }
     }
 }

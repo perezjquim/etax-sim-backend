@@ -18,8 +18,8 @@ namespace etax_sim.Models
 
         [Column("ParamValue")] public double ParamValue { get; set; }
 
-        public ICollection<SimulationParamRule> SimulationParamRule { get; set; }
+        public SimulationParamRule SimulationParamRule { get; set; }
 
-        public ICollection<Strategy> Strategy { get; set; }
+        public Strategy Strategy { get; set; }
     }
 }
