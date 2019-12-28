@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System;
 
 using etax_sim.Models;
+using Z.EntityFramework.Plus;
 
 namespace etax_sim.Controllers
 {
@@ -24,7 +25,17 @@ namespace etax_sim.Controllers
         [HttpGet]
         public ActionResult<List<Company>> Get()
         {
-            var list = mContext.mCompanies.Include("Roles").Include("Region").Include("Region.Country").Include("Sector").ToList();
+            //var list = mContext.mCompanies.Include("Roles").Include("Region").Include("Region.Country").Include("Sector").ToList();
+
+            /*var list = mContext.mCompanies.Where(c => c.IsActive == true).Select(c => new
+            {
+                Company = c,
+                c.Region,
+                c.Sector,
+                Roles = c.Roles.Where(r => r.IsActive == true)
+            }).ToList();*/
+            var ctx = new ;
+            var list = mContext.mCompanies.IncludeFilter(c => c.Roles.Where(r => r.IsActive))->ToList();
 
             if (list == null)
             {

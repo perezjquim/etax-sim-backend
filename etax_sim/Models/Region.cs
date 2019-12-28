@@ -21,7 +21,8 @@ namespace etax_sim.Models
         [Column("ModifiedAt")] public DateTime ModifiedAt { get; set; }
 
         [Column("CountryId")] public int CountryId { get; set; }
-        public Country Country { get; set; }
+        public Country Country
+        { get;set;}
 
         public ICollection<Company> Companies { get; set; }
     }

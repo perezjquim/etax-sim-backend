@@ -23,7 +23,12 @@ namespace etax_sim.Controllers
         [HttpGet]
         public ActionResult<List<Country>> Get()
         {
-            var list = _mContext.mCountries.Include("Regions").ToList();
+            //Where(c => c.Regions.Any(r => r.IsActive == true))
+            var list = _mContext.mCountries.Where(c => c.IsActive == true).Select(c => new
+            {
+                Country = c,
+                Regions = c.Regions.Where(r => r.IsActive == true)
+            }).ToList();
 
             if (list.Count < 1)
             {
@@ -37,10 +42,14 @@ namespace etax_sim.Controllers
         [HttpGet("{aId}")]
         public ActionResult<Country> Get(int aId)
         {
-            var country = _mContext.mCountries.Find(aId);
+            var country = _mContext.mCountries.Where(c => c.Id == aId && c.IsActive == true).Select(Country => new
+            {
+                Country,
+                Regions = Country.Regions.Where(r => r.IsActive == true)
+            }).First();
             if (country == null) return NotFound();
 
-            _mContext.Entry(country).Collection("Regions").Load();
+            //_mContext.Entry(country).Collection("Regions").Load();
             return Ok(country);
         }
 
