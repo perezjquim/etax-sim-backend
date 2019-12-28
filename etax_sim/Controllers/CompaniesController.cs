@@ -4,11 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System;
+using eTaxSim.Models;
 
-using etax_sim.Models;
-using Z.EntityFramework.Plus;
-
-namespace etax_sim.Controllers
+namespace eTaxSim.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

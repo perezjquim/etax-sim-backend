@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace etax_sim.Models
+namespace eTaxSim.Models
 {
     [Table("Role")]
     public class Role

@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using etax_sim.Models;
+using eTaxSim.Models;
 
-namespace etax_sim.Controllers
+namespace eTaxSim.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

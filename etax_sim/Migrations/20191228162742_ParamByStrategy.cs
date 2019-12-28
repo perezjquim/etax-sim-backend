@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace etax_sim.Migrations
+namespace eTaxSim.Migrations
 {
     public partial class ParamByStrategy : Migration
     {

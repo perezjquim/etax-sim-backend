@@ -6,9 +6,9 @@ using Microsoft.Extensions.DependencyInjection;
 
 
 using Microsoft.EntityFrameworkCore;
-using etax_sim.Models;
+using eTaxSim.Models;
 
-namespace etax_sim
+namespace eTaxSim
 {
     public class Startup
     {

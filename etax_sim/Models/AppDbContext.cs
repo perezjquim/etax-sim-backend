@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace etax_sim.Models
+namespace eTaxSim.Models
 {
     public class AppDbContext : DbContext
     {
