@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using etax_sim.Models;
-using etax_sim.Simulation.LiquidSalary.Strategy;
+﻿using System.Collections.Generic;
+using eTaxSim.Models;
+using eTaxSim.Simulation.LiquidSalary.Strategy;
 
-namespace etax_sim.Simulation
+namespace eTaxSim.Simulation
 {
     public class Simulator
     {
@@ -14,33 +11,33 @@ namespace etax_sim.Simulation
         private Company Company { get; set; }
         private Sector Sector { get; set; }
         private Role Role { get; set; }
-        private IDictionary<IStrategy, IDictionary<string, string>> strategyDictionary { get; set; }
-        private IDictionary<string, string> asd { get; set; }
+        private string Strategy { get; set; }
+        private IDictionary<string, string> ParametersDictionary { get; set; }
 
         public Simulator() { }
-        public Simulator(Country aCountry, Region aRegion, Company aCompany, Sector aSector, Role aRole, IDictionary<IStrategy, IDictionary<string, string>> aStrategy, IDictionary<string, string> aParametersDictionary)
+        public Simulator(Country aCountry, Region aRegion, Company aCompany, Sector aSector, Role aRole, string aStrategy, IDictionary<string, string> aParametersDictionary)
         {
             this.Country = aCountry;
             this.Region = aRegion;
             this.Company = aCompany;
             this.Sector = aSector;
             this.Role = aRole;
-            this.strategyDictionary = aStrategy;
+            this.Strategy = aStrategy;
+            this.ParametersDictionary = aParametersDictionary;
         }
 
-        public double ExecuteSimulation()
+        public void ExecuteSimulation()
         {
-            double result;
 
-            foreach (var keyValuePair in strategyDictionary)
-            {
-                var strategy = keyValuePair.Key;
-                strategy.Execute(keyValuePair.Value);
-            }
-
-            return result;
         }
-        
 
+        private IStrategy GetStrategyByName(string name)
+        {
+            IStrategy strategy = null;
+
+            return strategy;
+        }
+
+        private bool ValidateStrategyParam;
     }
 }

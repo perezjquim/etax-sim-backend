@@ -1,14 +1,12 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using eTaxSim.Models;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-
-using Microsoft.EntityFrameworkCore;
-using etax_sim.Models;
-
-namespace etax_sim
+namespace eTaxSim
 {
     public class Startup
     {

@@ -1,9 +1,7 @@
-using System;
 using System.ComponentModel.DataAnnotations;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace etax_sim.Models
+namespace eTaxSim.Models
 {
     [Table("__CALC_PT_IRS_PENS__")]
     public class CalcPT_IRSPens

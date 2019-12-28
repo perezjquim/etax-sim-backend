@@ -1,14 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
-namespace etax_sim.Simulation.LiquidSalary.Strategy
+namespace eTaxSim.Simulation.LiquidSalary.Strategy
 {
     public interface IStrategy
     {
 
-        double Execute(IDictionary<string, string> parametersDictionary);
+        ResponseResult Execute();
+
+        bool ValidateStrategyParam();
+
+        IDictionary<string, string> parametersDictionary { get; set; }
+
+
 
     }
 }

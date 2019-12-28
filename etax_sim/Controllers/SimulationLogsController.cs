@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+using eTaxSim.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using etax_sim.Models;
 
-namespace etax_sim.Controllers
+namespace eTaxSim.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
