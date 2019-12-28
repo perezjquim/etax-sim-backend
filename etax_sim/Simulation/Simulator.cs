@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using eTaxSim.Models;
+﻿using eTaxSim.Models;
 using eTaxSim.Simulation.LiquidSalary.Strategy;
+using System.Collections.Generic;
 
 namespace eTaxSim.Simulation
 {

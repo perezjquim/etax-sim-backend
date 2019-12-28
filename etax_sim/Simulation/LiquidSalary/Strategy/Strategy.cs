@@ -26,6 +26,6 @@ namespace eTaxSim.Simulation.LiquidSalary.Strategy
             throw new System.NotImplementedException();
         }
 
-        
+
     }
 }

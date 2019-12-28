@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using eTaxSim.Models;
+﻿using eTaxSim.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace eTaxSim.Controllers
 {
@@ -67,7 +67,7 @@ namespace eTaxSim.Controllers
             _context.mSimulationLogs.Add(simulationLog);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetSimulationLog", new {id = simulationLog.Id}, simulationLog);
+            return CreatedAtAction("GetSimulationLog", new { id = simulationLog.Id }, simulationLog);
         }
 
         // DELETE: api/SimulationLogs/5

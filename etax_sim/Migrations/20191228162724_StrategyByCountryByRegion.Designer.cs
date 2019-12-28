@@ -9,8 +9,8 @@ using eTaxSim.Models;
 namespace eTaxSim.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20191124025154_23112019-2")]
-    partial class _231120192
+    [Migration("20191228162724_StrategyByCountryByRegion")]
+    partial class StrategyByCountryByRegion
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -24,6 +24,9 @@ namespace eTaxSim.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("ID");
+
+                    b.Property<double>("IRSTax")
+                        .HasColumnName("IRSTax");
 
                     b.Property<bool>("IsArmedForces")
                         .HasColumnName("IsArmedForces");
@@ -47,6 +50,9 @@ namespace eTaxSim.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("ID");
+
+                    b.Property<double>("IRSTax")
+                        .HasColumnName("IRSTax");
 
                     b.Property<bool>("IsHandicapped")
                         .HasColumnName("IsHandicapped");

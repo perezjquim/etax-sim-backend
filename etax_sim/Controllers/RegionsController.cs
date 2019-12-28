@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using eTaxSim.Models;
+﻿using eTaxSim.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace eTaxSim.Controllers
 {
@@ -20,7 +20,14 @@ namespace eTaxSim.Controllers
         [HttpGet]
         public ActionResult<List<Region>> Get()
         {
-            var regions = _mContext.mRegions.Include("Companies").ToList();
+            //var regions = _mContext.mRegions.Include("Companies").ToList();
+            var regions = _mContext.mRegions.Where(r => r.IsActive == true).Select(r => new
+            {
+                Region = r,
+                Companies = r.Companies.Where(c => c.IsActive == true)
+                //Countries = r.Country.
+            }).ToList();
+
             if (regions.Count < 1) return NotFound();
 
             return Ok(regions);
@@ -29,7 +36,14 @@ namespace eTaxSim.Controllers
         [HttpGet("{aId}")]
         public ActionResult<Region> Get(int aId)
         {
-            var region = _mContext.mRegions.Find(aId);
+            //var region = _mContext.mRegions.Find(aId);
+            var region = _mContext.mRegions.Where(r => r.Id == aId && r.IsActive == true).Select(r => new
+            {
+                Region = r,
+                Companies = r.Companies.Where(c => c.IsActive == true)
+                //Countries = r.Country.
+            }).First();
+
             if (region == null) return NotFound();
 
             _mContext.Entry(region).Collection("Companies").Load();

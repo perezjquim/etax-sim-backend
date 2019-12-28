@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace eTaxSim.Simulation.LiquidSalary.Strategy
+﻿namespace eTaxSim.Simulation.LiquidSalary.Strategy
 {
     public interface IStrategy
     {
@@ -8,12 +6,6 @@ namespace eTaxSim.Simulation.LiquidSalary.Strategy
         ResponseResult Execute();
 
         bool ValidateStrategyParam();
-
-        IDictionary<string, string> GetParametersDictionary();
-
-        void SetParametersDictionary();
-
-
 
     }
 }

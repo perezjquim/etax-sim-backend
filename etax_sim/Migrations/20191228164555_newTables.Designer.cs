@@ -9,8 +9,8 @@ using eTaxSim.Models;
 namespace eTaxSim.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20191124025154_23112019-2")]
-    partial class _231120192
+    [Migration("20191228164555_newTables")]
+    partial class newTables
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -24,6 +24,9 @@ namespace eTaxSim.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("ID");
+
+                    b.Property<double>("IRSTax")
+                        .HasColumnName("IRSTax");
 
                     b.Property<bool>("IsArmedForces")
                         .HasColumnName("IsArmedForces");
@@ -47,6 +50,9 @@ namespace eTaxSim.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("ID");
+
+                    b.Property<double>("IRSTax")
+                        .HasColumnName("IRSTax");
 
                     b.Property<bool>("IsHandicapped")
                         .HasColumnName("IsHandicapped");
@@ -122,9 +128,40 @@ namespace eTaxSim.Migrations
                     b.Property<string>("Name")
                         .HasColumnName("Name");
 
+                    b.Property<int?>("StrategyByCountryByRegionId");
+
+                    b.Property<int?>("StrategyByCountryId");
+
                     b.HasKey("Id");
 
+                    b.HasIndex("StrategyByCountryByRegionId");
+
+                    b.HasIndex("StrategyByCountryId");
+
                     b.ToTable("Country");
+                });
+
+            modelBuilder.Entity("etax_sim.Models.ParamByStrategy", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("ID");
+
+                    b.Property<double>("ParamName")
+                        .HasColumnName("ParamName");
+
+                    b.Property<double>("ParamValue")
+                        .HasColumnName("ParamValue");
+
+                    b.Property<double>("SimulationParamRuleId")
+                        .HasColumnName("SimulationParamRuleId");
+
+                    b.Property<string>("StrategyId")
+                        .HasColumnName("StrategyId");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ParamByStrategy");
                 });
 
             modelBuilder.Entity("etax_sim.Models.Region", b =>
@@ -151,9 +188,13 @@ namespace eTaxSim.Migrations
                     b.Property<string>("Name")
                         .HasColumnName("Name");
 
+                    b.Property<int?>("StrategyByCountryByRegionId");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CountryId");
+
+                    b.HasIndex("StrategyByCountryByRegionId");
 
                     b.ToTable("Region");
                 });
@@ -288,12 +329,85 @@ namespace eTaxSim.Migrations
                     b.Property<double>("MinValue")
                         .HasColumnName("MinValue");
 
+                    b.Property<int?>("ParamByStrategyId");
+
                     b.Property<string>("ParamName")
                         .HasColumnName("ParamName");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ParamByStrategyId");
+
                     b.ToTable("SimulationParamRule");
+                });
+
+            modelBuilder.Entity("etax_sim.Models.Strategy", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("ID");
+
+                    b.Property<string>("Name")
+                        .HasColumnName("Name");
+
+                    b.Property<int?>("ParamByStrategyId");
+
+                    b.Property<int?>("StrategyByCountryByRegionId");
+
+                    b.Property<int?>("StrategyByCountryId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ParamByStrategyId");
+
+                    b.HasIndex("StrategyByCountryByRegionId");
+
+                    b.HasIndex("StrategyByCountryId");
+
+                    b.ToTable("Strategy");
+                });
+
+            modelBuilder.Entity("etax_sim.Models.StrategyByCountry", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("ID");
+
+                    b.Property<string>("CountryId")
+                        .HasColumnName("CountryId");
+
+                    b.Property<double>("Description")
+                        .HasColumnName("Description");
+
+                    b.Property<string>("StrategyId")
+                        .HasColumnName("StrategyId");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("StrategyByCountry");
+                });
+
+            modelBuilder.Entity("etax_sim.Models.StrategyByCountryByRegion", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("ID");
+
+                    b.Property<string>("CountryId")
+                        .HasColumnName("CountryId");
+
+                    b.Property<double>("Description")
+                        .HasColumnName("Description");
+
+                    b.Property<int>("RegionId")
+                        .HasColumnName("RegionId");
+
+                    b.Property<int>("StrategyId")
+                        .HasColumnName("StrategyId");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("StrategyByCountryByRegion");
                 });
 
             modelBuilder.Entity("etax_sim.Models.Company", b =>
@@ -309,12 +423,27 @@ namespace eTaxSim.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("etax_sim.Models.Country", b =>
+                {
+                    b.HasOne("etax_sim.Models.StrategyByCountryByRegion")
+                        .WithMany("Country")
+                        .HasForeignKey("StrategyByCountryByRegionId");
+
+                    b.HasOne("etax_sim.Models.StrategyByCountry")
+                        .WithMany("Country")
+                        .HasForeignKey("StrategyByCountryId");
+                });
+
             modelBuilder.Entity("etax_sim.Models.Region", b =>
                 {
                     b.HasOne("etax_sim.Models.Country", "Country")
                         .WithMany("Regions")
                         .HasForeignKey("CountryId")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("etax_sim.Models.StrategyByCountryByRegion")
+                        .WithMany("Region")
+                        .HasForeignKey("StrategyByCountryByRegionId");
                 });
 
             modelBuilder.Entity("etax_sim.Models.Role", b =>
@@ -344,6 +473,28 @@ namespace eTaxSim.Migrations
                         .WithMany("Params")
                         .HasForeignKey("SimulationLogId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("etax_sim.Models.SimulationParamRule", b =>
+                {
+                    b.HasOne("etax_sim.Models.ParamByStrategy")
+                        .WithMany("SimulationParamRule")
+                        .HasForeignKey("ParamByStrategyId");
+                });
+
+            modelBuilder.Entity("etax_sim.Models.Strategy", b =>
+                {
+                    b.HasOne("etax_sim.Models.ParamByStrategy")
+                        .WithMany("Strategy")
+                        .HasForeignKey("ParamByStrategyId");
+
+                    b.HasOne("etax_sim.Models.StrategyByCountryByRegion")
+                        .WithMany("Strategy")
+                        .HasForeignKey("StrategyByCountryByRegionId");
+
+                    b.HasOne("etax_sim.Models.StrategyByCountry")
+                        .WithMany("Strategy")
+                        .HasForeignKey("StrategyByCountryId");
                 });
 #pragma warning restore 612, 618
         }

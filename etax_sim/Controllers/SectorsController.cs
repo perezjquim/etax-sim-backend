@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using eTaxSim.Models;
+﻿using eTaxSim.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace eTaxSim.Controllers
 {
@@ -30,7 +30,7 @@ namespace eTaxSim.Controllers
         public async Task<ActionResult<Sector>> GetSector(int id)
         {
             var sector = await _context.mSectors.FindAsync(id);
-           await _context.Entry(sector).Collection("Companies").LoadAsync();
+            await _context.Entry(sector).Collection("Companies").LoadAsync();
 
             if (sector == null)
             {
