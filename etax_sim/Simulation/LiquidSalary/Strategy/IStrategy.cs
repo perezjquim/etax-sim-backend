@@ -1,11 +1,9 @@
 ﻿namespace eTaxSim.Simulation.LiquidSalary.Strategy
 {
-    public interface IStrategy
-    {
-
+    internal interface IStrategy
+    { 
         ResponseResult Execute();
 
         bool ValidateStrategyParam();
-
     }
 }

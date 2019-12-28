@@ -4,7 +4,7 @@ namespace eTaxSim.Simulation.LiquidSalary.Strategy.Portugal
 {
     internal class StgPortugal : IStrategy
     {
-        public IDictionary<string, string> parametersDictionary { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+        public IDictionary<string, string> ParametersDictionary { get; set; }
 
         public ResponseResult Execute()
         {
