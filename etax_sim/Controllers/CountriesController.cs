@@ -1,10 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using eTaxSim.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using System;
-using eTaxSim.Models;
 
 namespace eTaxSim.Controllers
 {
@@ -59,7 +57,7 @@ namespace eTaxSim.Controllers
         {
             _mContext.mCountries.Add(aCountry);
             _mContext.SaveChanges();
-            return CreatedAtAction(nameof(Get), new {Id = aCountry.Id}, aCountry);
+            return CreatedAtAction(nameof(Get), new { Id = aCountry.Id }, aCountry);
         }
 
         // PUT api/countries/5

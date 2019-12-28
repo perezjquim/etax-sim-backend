@@ -1,6 +1,6 @@
 using System;
-using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace eTaxSim.Models
@@ -22,7 +22,7 @@ namespace eTaxSim.Models
 
         [Column("CountryId")] public int CountryId { get; set; }
         public Country Country
-        { get;set;}
+        { get; set; }
 
         public ICollection<Company> Companies { get; set; }
     }
