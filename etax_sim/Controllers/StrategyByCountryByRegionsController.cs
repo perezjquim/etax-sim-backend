@@ -27,9 +27,18 @@ namespace etax_sim.Controllers
 
         // GET: api/StrategyByCountryByRegions/country/region/5/6
         [HttpGet("country/region/{countryId}/{regionId}")]
-        public async Task<ActionResult<IEnumerable<StrategyByCountryByRegion>>> GetmStrategyByCountryByRegionId(int countryId, int regionId)
+        public async Task<ActionResult<IEnumerable<object>>> GetmStrategyByCountryByRegionId(int countryId, int regionId)
         {
-            return await _context.mStrategyByCountryByRegion.Where(s => s.CountryId == countryId).Where(s => s.RegionId == regionId).ToListAsync();
+            var exceptions = await _context.mStrategyByCountryByRegion.Where(s => s.CountryId == countryId).Where(s => s.RegionId == regionId).Include("Strategy").ToListAsync();
+            if (exceptions.Count < 1)
+            {
+                //get general strategies
+                return await _context.mStrategyByCountry.Where(s => s.CountryId == countryId).Include("Strategy").ToListAsync();
+            }
+            else
+            {
+                return exceptions;
+            }
         }
 
         // GET: api/StrategyByCountryByRegions/5
