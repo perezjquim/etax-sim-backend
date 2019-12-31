@@ -9,8 +9,8 @@ using eTaxSim.Models;
 namespace eTaxSim.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20191228170015_newTablesNew")]
-    partial class newTablesNew
+    [Migration("20191231161305_new")]
+    partial class @new
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -19,7 +19,7 @@ namespace eTaxSim.Migrations
                 .HasAnnotation("ProductVersion", "2.2.6-servicing-10079")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("etax_sim.Models.CalcPT_IRSPens", b =>
+            modelBuilder.Entity("eTaxSim.Models.CalcPT_IRSPens", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -45,7 +45,7 @@ namespace eTaxSim.Migrations
                     b.ToTable("__CALC_PT_IRS_PENS__");
                 });
 
-            modelBuilder.Entity("etax_sim.Models.CalcPT_IRSTrabDep", b =>
+            modelBuilder.Entity("eTaxSim.Models.CalcPT_IRSTrabDep", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -71,7 +71,7 @@ namespace eTaxSim.Migrations
                     b.ToTable("__CALC_PT_IRS_TRAB_DEP__");
                 });
 
-            modelBuilder.Entity("etax_sim.Models.Company", b =>
+            modelBuilder.Entity("eTaxSim.Models.Company", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -107,7 +107,7 @@ namespace eTaxSim.Migrations
                     b.ToTable("Company");
                 });
 
-            modelBuilder.Entity("etax_sim.Models.Country", b =>
+            modelBuilder.Entity("eTaxSim.Models.Country", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -133,38 +133,34 @@ namespace eTaxSim.Migrations
                     b.ToTable("Country");
                 });
 
-            modelBuilder.Entity("etax_sim.Models.ParamByStrategy", b =>
+            modelBuilder.Entity("eTaxSim.Models.ParamByStrategy", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("ID");
 
-                    b.Property<double>("ParamName")
+                    b.Property<string>("ParamName")
                         .HasColumnName("ParamName");
 
                     b.Property<double>("ParamValue")
                         .HasColumnName("ParamValue");
 
-                    b.Property<double>("SimulationParamRuleId")
+                    b.Property<int>("SimulationParamRuleId")
                         .HasColumnName("SimulationParamRuleId");
 
-                    b.Property<int?>("SimulationParamRuleId1");
-
-                    b.Property<string>("StrategyId")
+                    b.Property<int>("StrategyId")
                         .HasColumnName("StrategyId");
-
-                    b.Property<int?>("StrategyId1");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SimulationParamRuleId1");
+                    b.HasIndex("SimulationParamRuleId");
 
-                    b.HasIndex("StrategyId1");
+                    b.HasIndex("StrategyId");
 
                     b.ToTable("ParamByStrategy");
                 });
 
-            modelBuilder.Entity("etax_sim.Models.Region", b =>
+            modelBuilder.Entity("eTaxSim.Models.Region", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -195,7 +191,7 @@ namespace eTaxSim.Migrations
                     b.ToTable("Region");
                 });
 
-            modelBuilder.Entity("etax_sim.Models.Role", b =>
+            modelBuilder.Entity("eTaxSim.Models.Role", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -226,7 +222,7 @@ namespace eTaxSim.Migrations
                     b.ToTable("Role");
                 });
 
-            modelBuilder.Entity("etax_sim.Models.Sector", b =>
+            modelBuilder.Entity("eTaxSim.Models.Sector", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -252,7 +248,7 @@ namespace eTaxSim.Migrations
                     b.ToTable("Sector");
                 });
 
-            modelBuilder.Entity("etax_sim.Models.SimulationLog", b =>
+            modelBuilder.Entity("eTaxSim.Models.SimulationLog", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -282,7 +278,7 @@ namespace eTaxSim.Migrations
                     b.ToTable("SimulationLog");
                 });
 
-            modelBuilder.Entity("etax_sim.Models.SimulationLogParam", b =>
+            modelBuilder.Entity("eTaxSim.Models.SimulationLogParam", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -313,7 +309,7 @@ namespace eTaxSim.Migrations
                     b.ToTable("SimulationLogParam");
                 });
 
-            modelBuilder.Entity("etax_sim.Models.SimulationParamRule", b =>
+            modelBuilder.Entity("eTaxSim.Models.SimulationParamRule", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -333,7 +329,7 @@ namespace eTaxSim.Migrations
                     b.ToTable("SimulationParamRule");
                 });
 
-            modelBuilder.Entity("etax_sim.Models.Strategy", b =>
+            modelBuilder.Entity("eTaxSim.Models.Strategy", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -347,47 +343,44 @@ namespace eTaxSim.Migrations
                     b.ToTable("Strategy");
                 });
 
-            modelBuilder.Entity("etax_sim.Models.StrategyByCountry", b =>
+            modelBuilder.Entity("eTaxSim.Models.StrategyByCountry", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("ID");
 
-                    b.Property<string>("CountryId")
+                    b.Property<int>("CountryId")
                         .HasColumnName("CountryId");
 
-                    b.Property<int?>("CountryId1");
-
-                    b.Property<double>("Description")
+                    b.Property<string>("Description")
                         .HasColumnName("Description");
 
-                    b.Property<string>("StrategyId")
+                    b.Property<int>("StrategyId")
                         .HasColumnName("StrategyId");
-
-                    b.Property<int?>("StrategyId1");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CountryId1");
+                    b.HasIndex("CountryId");
 
-                    b.HasIndex("StrategyId1");
+                    b.HasIndex("StrategyId");
 
                     b.ToTable("StrategyByCountry");
                 });
 
-            modelBuilder.Entity("etax_sim.Models.StrategyByCountryByRegion", b =>
+            modelBuilder.Entity("eTaxSim.Models.StrategyByCountryByRegion", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("ID");
 
-                    b.Property<string>("CountryId")
+                    b.Property<int>("CountryId")
                         .HasColumnName("CountryId");
 
-                    b.Property<int?>("CountryId1");
-
-                    b.Property<double>("Description")
+                    b.Property<string>("Description")
                         .HasColumnName("Description");
+
+                    b.Property<int>("ParentStrategyId")
+                        .HasColumnName("ParentStrategyId");
 
                     b.Property<int>("RegionId")
                         .HasColumnName("RegionId");
@@ -397,7 +390,9 @@ namespace eTaxSim.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CountryId1");
+                    b.HasIndex("CountryId");
+
+                    b.HasIndex("ParentStrategyId");
 
                     b.HasIndex("RegionId");
 
@@ -406,90 +401,100 @@ namespace eTaxSim.Migrations
                     b.ToTable("StrategyByCountryByRegion");
                 });
 
-            modelBuilder.Entity("etax_sim.Models.Company", b =>
+            modelBuilder.Entity("eTaxSim.Models.Company", b =>
                 {
-                    b.HasOne("etax_sim.Models.Region", "Region")
+                    b.HasOne("eTaxSim.Models.Region", "Region")
                         .WithMany("Companies")
                         .HasForeignKey("RegionId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("etax_sim.Models.Sector", "Sector")
+                    b.HasOne("eTaxSim.Models.Sector", "Sector")
                         .WithMany("Companies")
                         .HasForeignKey("SectorId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("etax_sim.Models.ParamByStrategy", b =>
+            modelBuilder.Entity("eTaxSim.Models.ParamByStrategy", b =>
                 {
-                    b.HasOne("etax_sim.Models.SimulationParamRule", "SimulationParamRule")
+                    b.HasOne("eTaxSim.Models.SimulationParamRule", "SimulationParamRule")
                         .WithMany()
-                        .HasForeignKey("SimulationParamRuleId1");
+                        .HasForeignKey("SimulationParamRuleId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("etax_sim.Models.Strategy", "Strategy")
+                    b.HasOne("eTaxSim.Models.Strategy", "Strategy")
                         .WithMany()
-                        .HasForeignKey("StrategyId1");
+                        .HasForeignKey("StrategyId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("etax_sim.Models.Region", b =>
+            modelBuilder.Entity("eTaxSim.Models.Region", b =>
                 {
-                    b.HasOne("etax_sim.Models.Country", "Country")
+                    b.HasOne("eTaxSim.Models.Country", "Country")
                         .WithMany("Regions")
                         .HasForeignKey("CountryId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("etax_sim.Models.Role", b =>
+            modelBuilder.Entity("eTaxSim.Models.Role", b =>
                 {
-                    b.HasOne("etax_sim.Models.Company", "Company")
+                    b.HasOne("eTaxSim.Models.Company", "Company")
                         .WithMany("Roles")
                         .HasForeignKey("CompanyId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("etax_sim.Models.SimulationLog", b =>
+            modelBuilder.Entity("eTaxSim.Models.SimulationLog", b =>
                 {
-                    b.HasOne("etax_sim.Models.Region", "Region")
+                    b.HasOne("eTaxSim.Models.Region", "Region")
                         .WithMany()
                         .HasForeignKey("RegionId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("etax_sim.Models.Role", "Role")
+                    b.HasOne("eTaxSim.Models.Role", "Role")
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("etax_sim.Models.SimulationLogParam", b =>
+            modelBuilder.Entity("eTaxSim.Models.SimulationLogParam", b =>
                 {
-                    b.HasOne("etax_sim.Models.SimulationLog", "SimulationLog")
+                    b.HasOne("eTaxSim.Models.SimulationLog", "SimulationLog")
                         .WithMany("Params")
                         .HasForeignKey("SimulationLogId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("etax_sim.Models.StrategyByCountry", b =>
+            modelBuilder.Entity("eTaxSim.Models.StrategyByCountry", b =>
                 {
-                    b.HasOne("etax_sim.Models.Country", "Country")
+                    b.HasOne("eTaxSim.Models.Country", "Country")
                         .WithMany()
-                        .HasForeignKey("CountryId1");
+                        .HasForeignKey("CountryId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("etax_sim.Models.Strategy", "Strategy")
+                    b.HasOne("eTaxSim.Models.Strategy", "Strategy")
                         .WithMany()
-                        .HasForeignKey("StrategyId1");
+                        .HasForeignKey("StrategyId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("etax_sim.Models.StrategyByCountryByRegion", b =>
+            modelBuilder.Entity("eTaxSim.Models.StrategyByCountryByRegion", b =>
                 {
-                    b.HasOne("etax_sim.Models.Country", "Country")
+                    b.HasOne("eTaxSim.Models.Country", "Country")
                         .WithMany()
-                        .HasForeignKey("CountryId1");
+                        .HasForeignKey("CountryId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("etax_sim.Models.Region", "Region")
+                    b.HasOne("eTaxSim.Models.Strategy", "ParentStrategy")
+                        .WithMany()
+                        .HasForeignKey("ParentStrategyId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("eTaxSim.Models.Region", "Region")
                         .WithMany()
                         .HasForeignKey("RegionId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("etax_sim.Models.Strategy", "Strategy")
+                    b.HasOne("eTaxSim.Models.Strategy", "Strategy")
                         .WithMany()
                         .HasForeignKey("StrategyId")
                         .OnDelete(DeleteBehavior.Cascade);

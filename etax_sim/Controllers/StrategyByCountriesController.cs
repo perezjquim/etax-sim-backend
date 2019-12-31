@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using eTaxSim.Models;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace eTaxSim.Controllers
 {
@@ -39,11 +41,22 @@ namespace eTaxSim.Controllers
             return strategyByCountry;
         }
 
-        // GET: api/StrategyByCountries/country/5
-        [HttpGet("country/{countryId}")]
-        public async Task<ActionResult<IEnumerable<StrategyByCountry>>> GetStrategyByCountryId(int countryId)
+        // GET: api/StrategyByCountries/country/5/6
+        [HttpGet("country/region/{countryId}/{regionId}")]
+        public async Task<ActionResult<IEnumerable<object>>> GetStrategyByCountryId(int countryId, int regionId)
         {
-            return await _context.mStrategyByCountry.Where(s => s.CountryId == countryId).ToListAsync();
+            //get all strategies that not have exceptions
+            var countryStrategies = await _context.mStrategyByCountry.Where(s => s.CountryId == countryId).Include("Country").Include("Strategy").
+                Where(s => !_context.mStrategyByCountryByRegion.Where(sRegion => sRegion.RegionId == regionId && sRegion.ParentStrategyId == s.StrategyId).
+                Select(sr => sr.CountryId).Contains(s.CountryId)).ToListAsync();
+            //get exceptions for selected region
+            var exceptions = await _context.mStrategyByCountryByRegion.Where(s => s.CountryId == countryId && s.RegionId == regionId).Include("Country").
+                Include("Strategy").ToListAsync();
+            dynamic result = new JObject();
+            /*result.countryStrategies = new JArray(countryStrategies);
+            result.exceptions = new JArray(exceptions);
+            return result;*/
+            return null;
         }
 
         // PUT: api/StrategyByCountries/5
