@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -18,5 +19,7 @@ namespace eTaxSim.Models
         public Country Country { get; set; }
 
         public Strategy Strategy { get; set; }
+
+        public ICollection<StrategyByCountryByRegion> StrategyByCountryByRegion { get; set; }
     }
 }

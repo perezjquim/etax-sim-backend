@@ -46,17 +46,24 @@ namespace eTaxSim.Controllers
         public async Task<ActionResult<IEnumerable<object>>> GetStrategyByCountryId(int countryId, int regionId)
         {
             //get all strategies that not have exceptions
-            var countryStrategies = await _context.mStrategyByCountry.Where(s => s.CountryId == countryId).Include("Country").Include("Strategy").
+            /*var countryStrategies = await _context.mStrategyByCountry.Where(s => s.CountryId == countryId).Include("Country").Include("Strategy").
                 Where(s => !_context.mStrategyByCountryByRegion.Where(sRegion => sRegion.RegionId == regionId && sRegion.ParentStrategyId == s.StrategyId).
-                Select(sr => sr.CountryId).Contains(s.CountryId)).ToListAsync();
+                Select(sr => sr.CountryId).Contains(s.CountryId)).ToListAsync();*/
+
+            var countryStrategies = await _context.mStrategyByCountry.Where(s => s.CountryId == countryId).Include("Country").Include("Strategy").
+                 Select(s => new
+                 {
+                     CountryStrategy = s,
+                     RegionStrategy = s.StrategyByCountryByRegion.Where(r => r.RegionId == regionId)
+                 }).ToListAsync();
             //get exceptions for selected region
-            var exceptions = await _context.mStrategyByCountryByRegion.Where(s => s.CountryId == countryId && s.RegionId == regionId).Include("Country").
-                Include("Strategy").ToListAsync();
-            dynamic result = new JObject();
-            /*result.countryStrategies = new JArray(countryStrategies);
+            /*var exceptions = await _context.mStrategyByCountryByRegion.Where(s => s.CountryId == countryId && s.RegionId == regionId).Include("Country").
+                Include("Strategy").ToListAsync();/*
+            /*dynamic result = new JObject();
+            result.countryStrategies = new JArray(countryStrategies);
             result.exceptions = new JArray(exceptions);
             return result;*/
-            return null;
+            return countryStrategies;
         }
 
         // PUT: api/StrategyByCountries/5

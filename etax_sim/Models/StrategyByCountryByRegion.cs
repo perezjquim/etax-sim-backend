@@ -28,5 +28,8 @@ namespace eTaxSim.Models
 
         [ForeignKey(nameof(ParentStrategyId))]
         public Strategy ParentStrategy { get; set; }
+
+        //[ForeignKey(nameof(CountryId))]
+        //public StrategyByCountry StrategyByCountry { get; set; }
     }
 }
