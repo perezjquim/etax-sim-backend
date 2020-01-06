@@ -50,12 +50,12 @@ namespace eTaxSim.Controllers
                 Where(s => !_context.mStrategyByCountryByRegion.Where(sRegion => sRegion.RegionId == regionId && sRegion.ParentStrategyId == s.StrategyId).
                 Select(sr => sr.CountryId).Contains(s.CountryId)).ToListAsync();*/
 
-            var countryStrategies = await _context.mStrategyByCountry.Where(s => s.CountryId == countryId).Include("Country").Include("Strategy").
-                 Select(s => new
+            var countryStrategies = await _context.mStrategyByCountry.Where(s => s.CountryId == countryId).Include("Country").Include("Strategy").Include("StrategyByCountryByRegion").Include("StrategyByCountryByRegion.Strategy").ToListAsync();
+                 /*Select(s => new
                  {
                      CountryStrategy = s,
                      RegionStrategy = s.StrategyByCountryByRegion.Where(r => r.RegionId == regionId)
-                 }).ToListAsync();
+                 }).ToListAsync();*/
             //get exceptions for selected region
             /*var exceptions = await _context.mStrategyByCountryByRegion.Where(s => s.CountryId == countryId && s.RegionId == regionId).Include("Country").
                 Include("Strategy").ToListAsync();/*
