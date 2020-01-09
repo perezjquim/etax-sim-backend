@@ -46,7 +46,7 @@ namespace eTaxSim.Controllers
 
             if (region == null) return NotFound();
 
-            _mContext.Entry(region).Collection("Companies").Load();
+            //_mContext.Entry(region).Collection("Companies").Load();
             return Ok(region);
         }
 
