@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using eTaxSim.Models;
 
 namespace eTaxSim.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200109211843_new5")]
+    partial class new5
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -145,6 +147,9 @@ namespace eTaxSim.Migrations
 
                     b.Property<double>("ParamValue")
                         .HasColumnName("ParamValue");
+
+                    b.Property<int>("SimulationParamRuleId")
+                        .HasColumnName("SimulationParamRuleId");
 
                     b.Property<int>("StrategyId")
                         .HasColumnName("StrategyId");

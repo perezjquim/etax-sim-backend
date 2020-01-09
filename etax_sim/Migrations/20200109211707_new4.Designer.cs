@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using eTaxSim.Models;
 
 namespace eTaxSim.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200109211707_new4")]
+    partial class new4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -146,16 +148,17 @@ namespace eTaxSim.Migrations
                     b.Property<double>("ParamValue")
                         .HasColumnName("ParamValue");
 
+                    b.Property<int>("SimulationParamRuleId")
+                        .HasColumnName("SimulationParamRuleId");
+
                     b.Property<int>("StrategyId")
                         .HasColumnName("StrategyId");
 
-                    b.Property<int?>("StrategyParamRuleId");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("StrategyId");
+                    b.HasIndex("SimulationParamRuleId");
 
-                    b.HasIndex("StrategyParamRuleId");
+                    b.HasIndex("StrategyId");
 
                     b.ToTable("ParamByStrategy");
                 });
@@ -414,14 +417,15 @@ namespace eTaxSim.Migrations
 
             modelBuilder.Entity("eTaxSim.Models.ParamByStrategy", b =>
                 {
+                    b.HasOne("eTaxSim.Models.StrategyParamRule", "SimulationParamRule")
+                        .WithMany()
+                        .HasForeignKey("SimulationParamRuleId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("eTaxSim.Models.Strategy", "Strategy")
                         .WithMany()
                         .HasForeignKey("StrategyId")
                         .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("eTaxSim.Models.StrategyParamRule", "StrategyParamRule")
-                        .WithMany()
-                        .HasForeignKey("StrategyParamRuleId");
                 });
 
             modelBuilder.Entity("eTaxSim.Models.Region", b =>

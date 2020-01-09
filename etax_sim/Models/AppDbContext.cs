@@ -15,7 +15,7 @@ namespace eTaxSim.Models
         public DbSet<Sector> mSectors { get; set; }
         public DbSet<SimulationLog> mSimulationLogs { get; set; }
         public DbSet<SimulationLogParam> mSimulationLogParams { get; set; }
-        public DbSet<SimulationParamRule> mSimulationParamRules { get; set; }
+        public DbSet<StrategyParamRule> mSimulationParamRules { get; set; }
         public DbSet<Strategy> mStrategy { get; set; }
         public DbSet<StrategyByCountry> mStrategyByCountry { get; set; }
         public DbSet<StrategyByCountryByRegion> mStrategyByCountryByRegion { get; set; }
