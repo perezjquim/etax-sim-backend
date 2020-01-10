@@ -15,7 +15,7 @@ namespace eTaxSim.Models
 
         [Column("ParamName")] public String ParamName { get; set; }
 
-        [Column("ParamValue")] public double ParamValue { get; set; }
+        //[Column("ParamValue")] public double ParamValue { get; set; }
 
         [Column("IsInput")] public bool IsInput { get; set; }
 
