@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿susing System.Collections.Generic;
 
 namespace eTaxSim.Simulation.LiquidSalary.Strategy
 {
@@ -8,7 +8,7 @@ namespace eTaxSim.Simulation.LiquidSalary.Strategy
 
         public abstract ResponseResult Execute();
 
-        public bool ValidateStrategyParam()
+        public bool IsValidParameters()
         {
             return true;
 

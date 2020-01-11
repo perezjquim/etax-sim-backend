@@ -6,13 +6,13 @@ namespace eTaxSim.Simulation
 {
     public class Simulator
     {
-        private Country Country { get; set; }
-        private Region Region { get; set; }
-        private Company Company { get; set; }
-        private Sector Sector { get; set; }
-        private Role Role { get; set; }
-        private string Strategy { get; set; }
-        private IDictionary<string, string> ParametersDictionary { get; set; }
+        public Country Country { get; set; }
+        public Region Region { get; set; }
+        public Company Company { get; set; }
+        public Sector Sector { get; set; }
+        public Role Role { get; set; }
+        public IStrategy Strategy { get; set; }
+        public IDictionary<string, string> ParametersDictionary { get; set; }
 
         public Simulator() { }
         public Simulator(Country aCountry, Region aRegion, Company aCompany, Sector aSector, Role aRole, string aStrategy, IDictionary<string, string> aParametersDictionary)
@@ -22,22 +22,18 @@ namespace eTaxSim.Simulation
             this.Company = aCompany;
             this.Sector = aSector;
             this.Role = aRole;
-            this.Strategy = aStrategy;
             this.ParametersDictionary = aParametersDictionary;
+
+            Strategy.SetStrategyParameters(Country, Region, aStrategy, ParametersDictionary);
         }
 
-        public void ExecuteSimulation()
+        public ResponseResult ExecuteSimulation()
         {
+            var valid = Strategy.IsValidParameters();
+            if(!valid) throw new System.ArgumentException("Invalid parameters");
 
+            var responseResult = Strategy.Execute();
+            return responseResult;
         }
-
-        private IStrategy GetStrategyByName(string name)
-        {
-            IStrategy strategy = null;
-
-            return strategy;
-        }
-
-        private bool ValidateStrategyParam;
     }
 }

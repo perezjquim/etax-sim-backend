@@ -1,9 +1,14 @@
-﻿namespace eTaxSim.Simulation.LiquidSalary.Strategy
+﻿using System.Collections.Generic;
+using eTaxSim.Models;
+
+namespace eTaxSim.Simulation.LiquidSalary.Strategy
 {
-    internal interface IStrategy
+    public interface IStrategy
     {
         ResponseResult Execute();
 
-        bool ValidateStrategyParam();
+        bool IsValidParameters();
+
+        void SetStrategyParameters(Country aCountry, Region aRegion, string aStrategy, IDictionary<string, string> aParametersDictionary);
     }
 }

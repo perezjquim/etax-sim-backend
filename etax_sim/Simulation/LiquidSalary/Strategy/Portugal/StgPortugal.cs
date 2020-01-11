@@ -16,7 +16,7 @@ namespace eTaxSim.Simulation.LiquidSalary.Strategy.Portugal
             throw new System.NotImplementedException();
         }
 
-        public bool ValidateStrategyParam()
+        public bool IsValidParameters()
         {
             throw new System.NotImplementedException();
         }
