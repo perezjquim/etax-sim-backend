@@ -3,12 +3,11 @@ using System.Collections.Generic;
 
 namespace eTaxSim.Simulation.LiquidSalary.Strategy
 {
-    public class Strategy : IStrategy
+    public class LiquidSalary : IStrategyGlobal
     {
         public Country Country { get; set; }
         public Region Region { get; set; }
 
-        //public Strategy;
 
         public ResponseResult Execute()
         {

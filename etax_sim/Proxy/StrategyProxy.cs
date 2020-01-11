@@ -12,7 +12,7 @@ namespace eTaxSim.Proxy
         {
             //verify strategy params name and value
             var strategyParams = this.GetStrategyParams(aStrategyId, aContext);
-            if(strategyParams == null)
+            if (strategyParams == null)
             {
                 return false;
             }
@@ -28,7 +28,7 @@ namespace eTaxSim.Proxy
                 return null;
             }
             aContext.Entry(strategy).Collection("ParamByStrategy").Load();
-            foreach(ParamByStrategy param in strategy.ParamByStrategy)
+            foreach (ParamByStrategy param in strategy.ParamByStrategy)
             {
                 aContext.Entry(param).Reference("StrategyParamRule").Load();
             }
@@ -41,29 +41,29 @@ namespace eTaxSim.Proxy
             var a = aStrategyParams;
             //loop at aStrategyParams
             var paramsEnum = aStrategyParams.GetEnumerator();
-            while(paramsEnum.MoveNext())
+            while (paramsEnum.MoveNext())
             {
                 var param = paramsEnum.Current;
-                if(aParameters.ContainsKey(param.ParamName))
+                if (aParameters.ContainsKey(param.ParamName))
                 {
                     var rule = param.StrategyParamRule;
                     if (aParameters.TryGetValue(param.ParamName, out StringValues values))
                     {
 
-                       var valuesArray = values.ToArray();
-                       if (valuesArray.Length > 0)
-                       {
-                          var inputValue = valuesArray[0];
-                          var result = this.VerifyRule(rule.MinValue, rule.MaxValue, inputValue);
-                          if(result == false)
-                          {
+                        var valuesArray = values.ToArray();
+                        if (valuesArray.Length > 0)
+                        {
+                            var inputValue = valuesArray[0];
+                            var result = this.VerifyRule(rule.MinValue, rule.MaxValue, inputValue);
+                            if (result == false)
+                            {
                                 return false;
-                          }
-                       }
+                            }
+                        }
                     }
                     else
                     {
-                       return false;
+                        return false;
                     }
                 }
                 else
@@ -79,23 +79,23 @@ namespace eTaxSim.Proxy
             var inputValue = Convert.ToDouble(aInputValue);
             if (aMaxValue != null && aMinValue != null)
             {
-                if(inputValue >= aMinValue && inputValue <= aMaxValue)
+                if (inputValue >= aMinValue && inputValue <= aMaxValue)
                 {
                     return true;
                 }
                 return false;
             }
-            else if(aMaxValue == null && aMinValue != null)
+            else if (aMaxValue == null && aMinValue != null)
             {
-                if(inputValue >= aMinValue)
+                if (inputValue >= aMinValue)
                 {
                     return true;
                 }
                 return false;
             }
-            else if(aMaxValue != null && aMinValue == null)
+            else if (aMaxValue != null && aMinValue == null)
             {
-                if(inputValue <= aMaxValue)
+                if (inputValue <= aMaxValue)
                 {
                     return true;
                 }

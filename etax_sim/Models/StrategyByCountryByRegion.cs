@@ -1,4 +1,3 @@
-using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -27,9 +26,9 @@ namespace eTaxSim.Models
         public Strategy Strategy { get; set; }
 
         //[ForeignKey(nameof(ParentStrategyId))]
-       // public Strategy ParentStrategy { get; set; }
+        // public Strategy ParentStrategy { get; set; }
 
         //[ForeignKey(nameof(CountryId))]
-       public StrategyByCountry StrategyByCountry { get; set; }
+        public StrategyByCountry StrategyByCountry { get; set; }
     }
 }

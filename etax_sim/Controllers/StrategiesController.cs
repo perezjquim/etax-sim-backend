@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using eTaxSim.Models;
+using eTaxSim.Proxy;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using eTaxSim.Models;
-using System.IO;
-using eTaxSim.Proxy;
-using Microsoft.Extensions.Primitives;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace eTaxSim.Controllers
 {
@@ -105,7 +102,7 @@ namespace eTaxSim.Controllers
             //var body = form.ToList();
             StrategyProxy proxy = new StrategyProxy();
             var paramsCheckResult = proxy.OnRequest(body, strategy.Id, _context);
-            if(paramsCheckResult)
+            if (paramsCheckResult)
             {
                 //Chamar função do borges que implementa a estratégia -> enviar dicionario chave valor
                 //ver simulator.cs

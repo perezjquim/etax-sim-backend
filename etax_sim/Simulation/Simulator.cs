@@ -1,6 +1,5 @@
-﻿using System;
-using eTaxSim.Models;
-using eTaxSim.Simulation.LiquidSalary.Strategy;
+﻿using eTaxSim.Models;
+using System;
 using System.Collections.Generic;
 
 namespace eTaxSim.Simulation
@@ -12,7 +11,7 @@ namespace eTaxSim.Simulation
         public Company Company { get; set; }
         public Sector Sector { get; set; }
         public Role Role { get; set; }
-        public IStrategy Strategy { get; set; }
+        public IStrategyGlobal Strategy { get; set; }
         public IDictionary<string, string> ParametersDictionary { get; set; }
 
         public Simulator() { }
@@ -31,7 +30,7 @@ namespace eTaxSim.Simulation
         public ResponseResult ExecuteSimulation()
         {
             var valid = Strategy.IsValidParameters();
-            if(!valid) throw new ArgumentException("Invalid parameters");
+            if (!valid) throw new ArgumentException("Invalid parameters");
 
             var responseResult = Strategy.Execute();
             return responseResult;

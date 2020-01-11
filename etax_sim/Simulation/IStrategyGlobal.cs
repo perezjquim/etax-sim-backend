@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
-using eTaxSim.Models;
+﻿using eTaxSim.Models;
+using System.Collections.Generic;
 
 namespace eTaxSim.Simulation
 {
-    public interface IStrategy
+    public interface IStrategyGlobal
     {
         ResponseResult Execute();
 
