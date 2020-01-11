@@ -16,7 +16,7 @@ namespace eTaxSim.Models
 
         [Column("MaxValue")] public double? MaxValue { get; set; }
 
-        public ICollection<RuleAllowedValues> RuleAllowedValues { get; set; }
+        //public ICollection<RuleAllowedValues> RuleAllowedValues { get; set; }
 
     }
 }

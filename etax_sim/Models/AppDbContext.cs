@@ -21,5 +21,9 @@ namespace eTaxSim.Models
         public DbSet<StrategyByCountryByRegion> mStrategyByCountryByRegion { get; set; }
         public DbSet<ParamByStrategy> mParamByStrategy { get; set; }
 
+        public DbSet<RuleAllowedValue> mRuleAllowedValue { get; set; }
+        public DbSet<ParamAllowedValue> mParamAllowedValue { get; set; }
+
+
     }
 }
