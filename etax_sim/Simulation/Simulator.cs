@@ -1,4 +1,5 @@
-﻿using eTaxSim.Models;
+﻿using System;
+using eTaxSim.Models;
 using eTaxSim.Simulation.LiquidSalary.Strategy;
 using System.Collections.Generic;
 

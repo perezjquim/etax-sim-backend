@@ -1,19 +1,28 @@
-﻿susing System.Collections.Generic;
+﻿using eTaxSim.Models;
+using System.Collections.Generic;
 
 namespace eTaxSim.Simulation.LiquidSalary.Strategy
 {
-    public abstract class Strategy : IStrategy
+    public class Strategy : IStrategy
     {
-        protected IDictionary<string, string> parametersDictionary { get; set; }
+        public Country Country { get; set; }
+        public Region Region { get; set; }
 
-        public abstract ResponseResult Execute();
+        //public Strategy;
+
+        public ResponseResult Execute()
+        {
+            throw new System.NotImplementedException();
+        }
 
         public bool IsValidParameters()
         {
-            return true;
-
+            throw new System.NotImplementedException();
         }
 
-
+        public void SetStrategyParameters(Country aCountry, Region aRegion, string aStrategy, IDictionary<string, string> aParametersDictionary)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
