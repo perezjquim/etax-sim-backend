@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using eTaxSim.Models;
 
 namespace eTaxSim.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200109210720_new2")]
+    partial class new2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -143,16 +145,20 @@ namespace eTaxSim.Migrations
                     b.Property<string>("ParamName")
                         .HasColumnName("ParamName");
 
+                    b.Property<double>("ParamValue")
+                        .HasColumnName("ParamValue");
+
+                    b.Property<int>("SimulationParamRuleId")
+                        .HasColumnName("SimulationParamRuleId");
+
                     b.Property<int>("StrategyId")
                         .HasColumnName("StrategyId");
 
-                    b.Property<int?>("StrategyParamRuleId");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("StrategyId");
+                    b.HasIndex("SimulationParamRuleId");
 
-                    b.HasIndex("StrategyParamRuleId");
+                    b.HasIndex("StrategyId");
 
                     b.ToTable("ParamByStrategy");
                 });
@@ -284,10 +290,10 @@ namespace eTaxSim.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnName("CreatedAt");
 
+                    b.Property<int?>("GetParamByStrategyId");
+
                     b.Property<DateTime>("ModifiedAt")
                         .HasColumnName("ModifiedAt");
-
-                    b.Property<int?>("ParamByStrategyId");
 
                     b.Property<string>("ParamValue")
                         .HasColumnName("ParamValue");
@@ -296,11 +302,31 @@ namespace eTaxSim.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ParamByStrategyId");
+                    b.HasIndex("GetParamByStrategyId");
 
                     b.HasIndex("SimulationLogId");
 
                     b.ToTable("SimulationLogParam");
+                });
+
+            modelBuilder.Entity("eTaxSim.Models.SimulationParamRule", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("ID");
+
+                    b.Property<double>("MaxValue")
+                        .HasColumnName("MaxValue");
+
+                    b.Property<double>("MinValue")
+                        .HasColumnName("MinValue");
+
+                    b.Property<string>("ParamName")
+                        .HasColumnName("ParamName");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SimulationParamRule");
                 });
 
             modelBuilder.Entity("eTaxSim.Models.Strategy", b =>
@@ -379,23 +405,6 @@ namespace eTaxSim.Migrations
                     b.ToTable("StrategyByCountryByRegion");
                 });
 
-            modelBuilder.Entity("eTaxSim.Models.StrategyParamRule", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnName("ID");
-
-                    b.Property<double>("MaxValue")
-                        .HasColumnName("MaxValue");
-
-                    b.Property<double>("MinValue")
-                        .HasColumnName("MinValue");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("StrategyParamRule");
-                });
-
             modelBuilder.Entity("eTaxSim.Models.Company", b =>
                 {
                     b.HasOne("eTaxSim.Models.Region", "Region")
@@ -411,14 +420,15 @@ namespace eTaxSim.Migrations
 
             modelBuilder.Entity("eTaxSim.Models.ParamByStrategy", b =>
                 {
+                    b.HasOne("eTaxSim.Models.SimulationParamRule", "SimulationParamRule")
+                        .WithMany()
+                        .HasForeignKey("SimulationParamRuleId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("eTaxSim.Models.Strategy", "Strategy")
                         .WithMany()
                         .HasForeignKey("StrategyId")
                         .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("eTaxSim.Models.StrategyParamRule", "StrategyParamRule")
-                        .WithMany()
-                        .HasForeignKey("StrategyParamRuleId");
                 });
 
             modelBuilder.Entity("eTaxSim.Models.Region", b =>
@@ -452,9 +462,9 @@ namespace eTaxSim.Migrations
 
             modelBuilder.Entity("eTaxSim.Models.SimulationLogParam", b =>
                 {
-                    b.HasOne("eTaxSim.Models.ParamByStrategy", "ParamByStrategy")
+                    b.HasOne("eTaxSim.Models.ParamByStrategy", "GetParamByStrategy")
                         .WithMany()
-                        .HasForeignKey("ParamByStrategyId");
+                        .HasForeignKey("GetParamByStrategyId");
 
                     b.HasOne("eTaxSim.Models.SimulationLog", "SimulationLog")
                         .WithMany("Params")

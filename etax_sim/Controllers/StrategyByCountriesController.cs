@@ -43,7 +43,7 @@ namespace eTaxSim.Controllers
 
         // GET: api/StrategyByCountries/country/5/6
         [HttpGet("country/region/{countryId}/{regionId}")]
-        public async Task<ActionResult<IEnumerable<object>>> GetStrategyByCountryId(int countryId, int regionId)
+        public async Task<ActionResult<IEnumerable<StrategyByCountry>>> GetStrategyByCountryId(int countryId, int regionId)
         {
             //get all strategies that not have exceptions
             /*var countryStrategies = await _context.mStrategyByCountry.Where(s => s.CountryId == countryId).Include("Country").Include("Strategy").
@@ -51,11 +51,19 @@ namespace eTaxSim.Controllers
                 Select(sr => sr.CountryId).Contains(s.CountryId)).ToListAsync();*/
 
             var countryStrategies = await _context.mStrategyByCountry.Where(s => s.CountryId == countryId).Include("Country").Include("Strategy").Include("StrategyByCountryByRegion").Include("StrategyByCountryByRegion.Strategy").ToListAsync();
-                 /*Select(s => new
-                 {
-                     CountryStrategy = s,
-                     RegionStrategy = s.StrategyByCountryByRegion.Where(r => r.RegionId == regionId)
-                 }).ToListAsync();*/
+            List<StrategyByCountry> listResult = new List<StrategyByCountry>();
+            for (var i = 0; i < countryStrategies.Count; i++)
+            {
+                if (countryStrategies[i].StrategyByCountryByRegion.Count == 0 || countryStrategies[i].StrategyByCountryByRegion.First().RegionId == regionId)
+                {
+                    listResult.Add(countryStrategies[i]);
+                }
+            }
+            /*Select(s => new
+            {
+                CountryStrategy = s,
+                RegionStrategy = s.StrategyByCountryByRegion.Where(r => r.RegionId == regionId)
+            }).ToListAsync();*/
             //get exceptions for selected region
             /*var exceptions = await _context.mStrategyByCountryByRegion.Where(s => s.CountryId == countryId && s.RegionId == regionId).Include("Country").
                 Include("Strategy").ToListAsync();/*
@@ -63,7 +71,7 @@ namespace eTaxSim.Controllers
             result.countryStrategies = new JArray(countryStrategies);
             result.exceptions = new JArray(exceptions);
             return result;*/
-            return countryStrategies;
+            return listResult;
         }
 
         // PUT: api/StrategyByCountries/5
