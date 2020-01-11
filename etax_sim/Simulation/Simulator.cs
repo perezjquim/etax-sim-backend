@@ -31,7 +31,7 @@ namespace eTaxSim.Simulation
         public ResponseResult ExecuteSimulation()
         {
             var valid = Strategy.IsValidParameters();
-            if(!valid) throw new System.ArgumentException("Invalid parameters");
+            if(!valid) throw new ArgumentException("Invalid parameters");
 
             var responseResult = Strategy.Execute();
             return responseResult;

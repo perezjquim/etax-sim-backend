@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using eTaxSim.Models;
 
-namespace eTaxSim.Simulation.LiquidSalary.Strategy
+namespace eTaxSim.Simulation
 {
     public interface IStrategy
     {
