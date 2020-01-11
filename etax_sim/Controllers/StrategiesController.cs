@@ -105,15 +105,19 @@ namespace eTaxSim.Controllers
             //var body = form.ToList();
             StrategyProxy proxy = new StrategyProxy();
             var strategyResult = proxy.OnRequest(body, strategy, _context);
-            if(strategyResult != null)
+            var properties = strategyResult.GetType().GetProperties();
+            var resultType = properties[1].GetValue(strategyResult, null);
+            var msg = properties[2].GetValue(strategyResult, null);
+            //if (strategyResult != null)
+            if (resultType.Equals("S"))
             {
                 //Chamar função do borges que implementa a estratégia -> enviar dicionario chave valor
                 //ver simulator.cs
 
-                return Ok(new { type = "S", msg = "Success" });
+                return Ok(new { type = resultType, msg = msg });
             }
             //enviar mensagem de erro.
-            return BadRequest(new { type = "E", msg = "InvalidParameters" });
+            return BadRequest(new { type = resultType, msg = msg });
             //return strategyResult;
         }
 

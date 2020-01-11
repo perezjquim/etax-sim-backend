@@ -13,12 +13,16 @@ namespace eTaxSim.Proxy
             //verify strategy params name and value
             var strategyParams = this.GetStrategyParams(aStrategy, aContext);
             var paramsCheck = this.VerifyStrategyParams(strategyParams.Value.ParamByStrategy, aContext, aParameters);
-            if(paramsCheck == true)
+            var properties = paramsCheck.GetType().GetProperties();
+            //if(paramsCheck == true)
+            var type = properties[0].GetValue(paramsCheck,null);
+            var msg = properties[1].GetValue(paramsCheck, null);
+            if(type.Equals("S"))
             {
-                return strategyParams;
+                return new { strategy = strategyParams, type = type, msg = msg };
             }
-            return null;
-            //return paramsCheck;
+            return new { strategy = (object) null, type = type, msg = msg };
+            //return null;
         }
 
         public ActionResult<Strategy> GetStrategyParams(Strategy aStrategy, AppDbContext aContext)
@@ -37,7 +41,7 @@ namespace eTaxSim.Proxy
             return aStrategy;
         }
 
-        public bool VerifyStrategyParams(ICollection<ParamByStrategy> aStrategyParams, AppDbContext aContext, Dictionary<string, StringValues> aParameters)
+        public object VerifyStrategyParams(ICollection<ParamByStrategy> aStrategyParams, AppDbContext aContext, Dictionary<string, StringValues> aParameters)
         {
             var a = aStrategyParams;
             //loop at aStrategyParams
@@ -58,21 +62,25 @@ namespace eTaxSim.Proxy
                           var result = this.VerifyRule(rule.MinValue, rule.MaxValue, inputValue);
                           if(result == false)
                           {
-                                return false;
+                                //return false;
+                                return new { type = "E", msg = "InvalidParameterValue" };
                           }
                        }
                     }
                     else
                     {
-                       return false;
+                        //return false;
+                        return new { type = "E", msg = "InvalidParameterValue" };
                     }
                 }
                 else
                 {
-                    return false;
+                    //return false;
+                    return new { type = "E", msg = "MissingParameters" };
                 }
             }
-            return true;
+            //return true;
+            return new { type = "S", msg = "ValidParameters" };
         }
 
         public bool VerifyRule(double? aMinValue, double? aMaxValue, string aInputValue)
