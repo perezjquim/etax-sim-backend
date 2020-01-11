@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -14,6 +15,8 @@ namespace eTaxSim.Models
         [Column("MinValue")] public double? MinValue { get; set; }
 
         [Column("MaxValue")] public double? MaxValue { get; set; }
+
+        public ICollection<RuleAllowedValues> RuleAllowedValues { get; set; }
 
     }
 }
