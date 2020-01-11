@@ -6,6 +6,6 @@ namespace eTaxSim.Proxy
 {
     internal interface IProxy
     {
-        bool OnRequest(Dictionary<string, StringValues> aParameters, int aStrategyId, AppDbContext aContext);
+        object OnRequest(Dictionary<string, StringValues> aParameters, Strategy aStrategy, AppDbContext aContext);
     }
 }

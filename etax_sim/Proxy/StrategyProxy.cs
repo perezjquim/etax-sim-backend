@@ -8,32 +8,33 @@ namespace eTaxSim.Proxy
 {
     public class StrategyProxy : IProxy
     {
-        public bool OnRequest(Dictionary<string, StringValues> aParameters, int aStrategyId, AppDbContext aContext)
+        public object OnRequest(Dictionary<string, StringValues> aParameters, Strategy aStrategy, AppDbContext aContext)
         {
             //verify strategy params name and value
-            var strategyParams = this.GetStrategyParams(aStrategyId, aContext);
-            if(strategyParams == null)
-            {
-                return false;
-            }
+            var strategyParams = this.GetStrategyParams(aStrategy, aContext);
             var paramsCheck = this.VerifyStrategyParams(strategyParams.Value.ParamByStrategy, aContext, aParameters);
-            return paramsCheck;
+            if(paramsCheck == true)
+            {
+                return strategyParams;
+            }
+            return null;
+            //return paramsCheck;
         }
 
-        public ActionResult<Strategy> GetStrategyParams(int aStrategyId, AppDbContext aContext)
+        public ActionResult<Strategy> GetStrategyParams(Strategy aStrategy, AppDbContext aContext)
         {
-            var strategy = aContext.mStrategy.Find(aStrategyId);
+            /*var strategy = aContext.mStrategy.Find(aStrategyId);
             if (strategy == null)
             {
                 return null;
-            }
-            aContext.Entry(strategy).Collection("ParamByStrategy").Load();
-            foreach(ParamByStrategy param in strategy.ParamByStrategy)
+            }*/
+            aContext.Entry(aStrategy).Collection("ParamByStrategy").Load();
+            foreach(ParamByStrategy param in aStrategy.ParamByStrategy)
             {
                 aContext.Entry(param).Reference("StrategyParamRule").Load();
             }
             //aContext.Entry(strategy).Collection("ParamByStrategy.StrategyParamRule").Load();
-            return strategy;
+            return aStrategy;
         }
 
         public bool VerifyStrategyParams(ICollection<ParamByStrategy> aStrategyParams, AppDbContext aContext, Dictionary<string, StringValues> aParameters)
@@ -106,16 +107,5 @@ namespace eTaxSim.Proxy
                 return false;
             }
         }
-
-        /*public ActionResult<ParamByStrategy> GetParamRule(int aParamId, AppDbContext aContext)
-        {
-            var strategyParam = aContext.mParamByStrategy.Find(aParamId);
-            if (strategyParam == null)
-            {
-                return null;
-            }
-            aContext.Entry(strategyParam).Collection("StrategyParamRule").Load();
-            return strategyParam;
-        }*/
     }
 }
