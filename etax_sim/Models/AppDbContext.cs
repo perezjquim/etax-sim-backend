@@ -19,7 +19,7 @@ namespace eTaxSim.Models
         public DbSet<Strategy> mStrategy { get; set; }
         public DbSet<StrategyByCountry> mStrategyByCountry { get; set; }
         public DbSet<StrategyByCountryByRegion> mStrategyByCountryByRegion { get; set; }
-        public DbSet<ParamByStrategy> ParamByStrategy { get; set; }
+        public DbSet<ParamByStrategy> mParamByStrategy { get; set; }
 
     }
 }

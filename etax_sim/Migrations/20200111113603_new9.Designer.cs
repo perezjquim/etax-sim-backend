@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using eTaxSim.Models;
 
 namespace eTaxSim.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200111113603_new9")]
+    partial class new9
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -326,6 +328,9 @@ namespace eTaxSim.Migrations
                     b.Property<int>("CountryId")
                         .HasColumnName("CountryId");
 
+                    b.Property<string>("Description")
+                        .HasColumnName("Description");
+
                     b.Property<int>("StrategyId")
                         .HasColumnName("StrategyId");
 
@@ -347,6 +352,11 @@ namespace eTaxSim.Migrations
                     b.Property<int>("CountryId")
                         .HasColumnName("CountryId");
 
+                    b.Property<string>("Description")
+                        .HasColumnName("Description");
+
+                    b.Property<int?>("ParentStrategyId");
+
                     b.Property<int>("RegionId")
                         .HasColumnName("RegionId");
 
@@ -358,6 +368,8 @@ namespace eTaxSim.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CountryId");
+
+                    b.HasIndex("ParentStrategyId");
 
                     b.HasIndex("RegionId");
 
@@ -374,10 +386,10 @@ namespace eTaxSim.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnName("ID");
 
-                    b.Property<double?>("MaxValue")
+                    b.Property<double>("MaxValue")
                         .HasColumnName("MaxValue");
 
-                    b.Property<double?>("MinValue")
+                    b.Property<double>("MinValue")
                         .HasColumnName("MinValue");
 
                     b.HasKey("Id");
@@ -470,12 +482,16 @@ namespace eTaxSim.Migrations
                         .HasForeignKey("CountryId")
                         .OnDelete(DeleteBehavior.Cascade);
 
+                    b.HasOne("eTaxSim.Models.Strategy", "ParentStrategy")
+                        .WithMany()
+                        .HasForeignKey("ParentStrategyId");
+
                     b.HasOne("eTaxSim.Models.Region", "Region")
                         .WithMany()
                         .HasForeignKey("RegionId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("eTaxSim.Models.StrategyByCountry", "StrategyByCountry")
+                    b.HasOne("eTaxSim.Models.StrategyByCountry")
                         .WithMany("StrategyByCountryByRegion")
                         .HasForeignKey("StrategyByCountryId");
 

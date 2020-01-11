@@ -14,7 +14,7 @@ namespace eTaxSim.Models
 
         [Column("StrategyId")] public int StrategyId { get; set; }
 
-        [Column("Description")] public String Description { get; set; }
+        //[Column("Description")] public String Description { get; set; }
 
         public Country Country { get; set; }
 
