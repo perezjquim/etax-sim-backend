@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using eTaxSim.Models;
 
 namespace eTaxSim.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200111152727_new16")]
+    partial class new16
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -131,25 +133,6 @@ namespace eTaxSim.Migrations
                     b.ToTable("Country");
                 });
 
-            modelBuilder.Entity("eTaxSim.Models.ParamAllowedValue", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnName("ID");
-
-                    b.Property<int?>("ParamByStrategyId");
-
-                    b.Property<int?>("RuleAllowedValueId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ParamByStrategyId");
-
-                    b.HasIndex("RuleAllowedValueId");
-
-                    b.ToTable("ParamAllowedValues");
-                });
-
             modelBuilder.Entity("eTaxSim.Models.ParamByStrategy", b =>
                 {
                     b.Property<int>("Id")
@@ -238,16 +221,20 @@ namespace eTaxSim.Migrations
                     b.ToTable("Role");
                 });
 
-            modelBuilder.Entity("eTaxSim.Models.RuleAllowedValue", b =>
+            modelBuilder.Entity("eTaxSim.Models.RuleAllowedValues", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("ID");
 
+                    b.Property<int?>("StrategyParamRuleId");
+
                     b.Property<string>("Value")
                         .HasColumnName("Value");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("StrategyParamRuleId");
 
                     b.ToTable("RuleAllowedValues");
                 });
@@ -431,17 +418,6 @@ namespace eTaxSim.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("eTaxSim.Models.ParamAllowedValue", b =>
-                {
-                    b.HasOne("eTaxSim.Models.ParamByStrategy", "ParamByStrategy")
-                        .WithMany("ParamAllowedValue")
-                        .HasForeignKey("ParamByStrategyId");
-
-                    b.HasOne("eTaxSim.Models.RuleAllowedValue", "RuleAllowedValue")
-                        .WithMany("ParamAllowedValue")
-                        .HasForeignKey("RuleAllowedValueId");
-                });
-
             modelBuilder.Entity("eTaxSim.Models.ParamByStrategy", b =>
                 {
                     b.HasOne("eTaxSim.Models.Strategy", "Strategy")
@@ -468,6 +444,13 @@ namespace eTaxSim.Migrations
                         .WithMany("Roles")
                         .HasForeignKey("CompanyId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("eTaxSim.Models.RuleAllowedValues", b =>
+                {
+                    b.HasOne("eTaxSim.Models.StrategyParamRule", "StrategyParamRule")
+                        .WithMany("RuleAllowedValues")
+                        .HasForeignKey("StrategyParamRuleId");
                 });
 
             modelBuilder.Entity("eTaxSim.Models.SimulationLog", b =>
