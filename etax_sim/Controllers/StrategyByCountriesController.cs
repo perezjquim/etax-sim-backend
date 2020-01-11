@@ -1,11 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using eTaxSim.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using eTaxSim.Models;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 namespace eTaxSim.Controllers
 {
