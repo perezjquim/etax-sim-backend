@@ -11,6 +11,7 @@ namespace eTaxSim.Models
         [Key] [Column("ID")] public int Id { get; set; }
 
         [Column("Name")] public String Name { get; set; }
+        [Column("ImplementingClass")] public String ImplementingClass { get; set; }
 
         public ICollection<ParamByStrategy> ParamByStrategy { get; set; }
 
