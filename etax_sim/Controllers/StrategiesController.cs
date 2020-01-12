@@ -1,11 +1,14 @@
-﻿using eTaxSim.Models;
-using eTaxSim.Proxy;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using eTaxSim.Models;
+using System.IO;
+using eTaxSim.Proxy;
+using Microsoft.Extensions.Primitives;
 
 namespace eTaxSim.Controllers
 {
@@ -82,7 +85,7 @@ namespace eTaxSim.Controllers
         }
 
         // POST: api/Strategies
-        [HttpPost("{id}/evaluate")]
+        [HttpPost("{id}/{countryId}/{regionId}/evaluate")]
         public ActionResult<Strategy> PostStrategySimul(int id, IFormCollection form)
         {
             //var i = input;
@@ -101,13 +104,21 @@ namespace eTaxSim.Controllers
             var body = form.ToDictionary(k => k.Key, v => v.Value);
             //var body = form.ToList();
             StrategyProxy proxy = new StrategyProxy();
-            var paramsCheckResult = proxy.OnRequest(body, strategy.Id, _context);
-            if (paramsCheckResult)
+            var strategyResult = proxy.OnRequest(body, strategy, _context);
+            var properties = strategyResult.GetType().GetProperties();
+            var resultType = properties[1].GetValue(strategyResult, null);
+            var msg = properties[2].GetValue(strategyResult, null);
+            //if (strategyResult != null)
+            if (resultType.Equals("S"))
             {
                 //Chamar função do borges que implementa a estratégia -> enviar dicionario chave valor
                 //ver simulator.cs
+
+                return Ok(new { type = resultType, msg = msg });
             }
-            return strategy;
+            //enviar mensagem de erro.
+            return BadRequest(new { type = resultType, msg = msg });
+            //return strategyResult;
         }
 
         // DELETE: api/Strategies/5
