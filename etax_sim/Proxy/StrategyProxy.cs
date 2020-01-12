@@ -37,6 +37,10 @@ namespace eTaxSim.Proxy
             {
                 aContext.Entry(param).Reference("StrategyParamRule").Load();
             }
+            foreach (ParamByStrategy param in aStrategy.ParamByStrategy)
+            {
+                aContext.Entry(param).Collection("ParamAllowedValue").Load();
+            }
             //aContext.Entry(strategy).Collection("ParamByStrategy.StrategyParamRule").Load();
             return aStrategy;
         }
@@ -51,7 +55,7 @@ namespace eTaxSim.Proxy
                 var param = paramsEnum.Current;
                 if(aParameters.ContainsKey(param.ParamName))
                 {
-                    var rule = param.StrategyParamRule;
+                    //var rule = param.StrategyParamRule;
                     if (aParameters.TryGetValue(param.ParamName, out StringValues values))
                     {
 
@@ -59,12 +63,20 @@ namespace eTaxSim.Proxy
                        if (valuesArray.Length > 0)
                        {
                           var inputValue = valuesArray[0];
-                          var result = this.VerifyRule(rule.MinValue, rule.MaxValue, inputValue);
-                          if(result == false)
-                          {
-                                //return false;
-                                return new { type = "E", msg = "InvalidParameterValue" };
-                          }
+                          var rule = param.StrategyParamRule;
+                          if(rule != null)
+                            {
+                                var result = this.VerifyRule(rule.MinValue, rule.MaxValue, inputValue);
+                                if (result == false)
+                                {
+                                    //return false;
+                                    return new { type = "E", msg = "InvalidParameterValue" };
+                                }
+                            }
+                            else
+                            {
+                                //not have rule, verify allowed params
+                            }
                        }
                     }
                     else
@@ -114,6 +126,11 @@ namespace eTaxSim.Proxy
             {
                 return false;
             }
+        }
+
+        public bool verifyAllowedValues()
+        {
+            return true;
         }
     }
 }
