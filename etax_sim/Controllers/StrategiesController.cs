@@ -85,7 +85,7 @@ namespace eTaxSim.Controllers
         }
 
         // POST: api/Strategies
-        [HttpPost("{id}/evaluate")]
+        [HttpPost("{id}/{countryId}/{regionId}/evaluate")]
         public ActionResult<Strategy> PostStrategySimul(int id, IFormCollection form)
         {
             //var i = input;
