@@ -1,7 +1,7 @@
 ﻿using eTaxSim.Models;
+using eTaxSim.Simulation.Model;
 using System;
 using System.Collections.Generic;
-using eTaxSim.Simulation.Model;
 
 namespace eTaxSim.Simulation
 {
