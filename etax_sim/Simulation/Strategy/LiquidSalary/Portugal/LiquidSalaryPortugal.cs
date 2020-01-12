@@ -1,9 +1,10 @@
-﻿using eTaxSim.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using eTaxSim.Models;
+using eTaxSim.Simulation.Model;
 
-namespace eTaxSim.Simulation.LiquidSalary.Strategy.Portugal.Madeira
+namespace eTaxSim.Simulation.Strategy.LiquidSalary.Portugal
 {
-    public class LiquidSalaryMadeira : IStrategyGlobal
+    internal partial class LiquidSalaryPortugal : IStrategyGlobal
     {
         public ResponseResult Execute()
         {

@@ -1,5 +1,6 @@
 ﻿using eTaxSim.Models;
 using System.Collections.Generic;
+using eTaxSim.Simulation.Model;
 
 namespace eTaxSim.Simulation
 {

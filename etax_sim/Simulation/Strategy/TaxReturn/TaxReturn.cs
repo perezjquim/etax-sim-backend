@@ -1,13 +1,15 @@
-﻿using eTaxSim.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using eTaxSim.Models;
+using eTaxSim.Simulation.Model;
 
-namespace eTaxSim.Simulation.LiquidSalary.Strategy
+namespace eTaxSim.Simulation.Strategy.TaxReturn
 {
-    public class LiquidSalary : IStrategyGlobal
+    public class TaxReturn : IStrategyGlobal
     {
         public Country Country { get; set; }
         public Region Region { get; set; }
 
+        //public Strategy;
 
         public ResponseResult Execute()
         {
