@@ -86,7 +86,7 @@ namespace eTaxSim.Controllers
 
         // POST: api/Strategies
         [HttpPost("{id}/{countryId}/{regionId}/evaluate")]
-        public ActionResult<Strategy> PostStrategySimul(int id, IFormCollection form)
+        public ActionResult<Strategy> PostStrategySimul(int id, int countryId, int regionId, IFormCollection form)
         {
             //var i = input;
             /*using (var reader = new StreamReader(Request.Form))
@@ -111,9 +111,9 @@ namespace eTaxSim.Controllers
             //if (strategyResult != null)
             if (resultType.Equals("S"))
             {
-                //Chamar função do borges que implementa a estratégia -> enviar dicionario chave valor
-                //ver simulator.cs
-
+                SimulAdapter simulAdapter = new SimulAdapter();
+                var simulInput = simulAdapter.OnAdapt(_context, strategy, countryId, regionId, body);
+                //simulInput.ExecuteSimulation();
                 return Ok(new { type = resultType, msg = msg });
             }
             //enviar mensagem de erro.
