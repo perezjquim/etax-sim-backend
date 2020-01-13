@@ -24,7 +24,7 @@ namespace eTaxSim.Simulation.Strategy.Creation
             }
             catch (Exception e)
             {
-                ArgumentException argEx = new ArgumentException("Class name not found", className, e);
+                ArgumentException argEx = new ArgumentException("Class name not found", aClassName, e);
                 throw argEx;
             }
 
