@@ -2,6 +2,7 @@
 using eTaxSim.Simulation.Model;
 using System;
 using System.Collections.Generic;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace eTaxSim.Simulation
 {
@@ -12,12 +13,13 @@ namespace eTaxSim.Simulation
         public Company Company { get; set; }
         public Sector Sector { get; set; }
         public Role Role { get; set; }
-        public IStrategyGlobal Strategy { get; set; }
+        public IStrategy Strategy { get; set; }
         public IDictionary<string, string> ParametersDictionary { get; set; }
+        private readonly AppDbContext _context;
 
-        public Simulator() { }
-        public Simulator(Country aCountry, Region aRegion, Company aCompany, Sector aSector, Role aRole, string aStrategy, IDictionary<string, string> aParametersDictionary)
+        public Simulator(AppDbContext context, Country aCountry, Region aRegion, Company aCompany, Sector aSector, Role aRole, string aStrategy, IDictionary<string, string> aParametersDictionary)
         {
+            this._context = context;
             this.Country = aCountry;
             this.Region = aRegion;
             this.Company = aCompany;
@@ -30,9 +32,6 @@ namespace eTaxSim.Simulation
 
         public ResponseResult ExecuteSimulation()
         {
-            var valid = Strategy.IsValidParameters();
-            if (!valid) throw new ArgumentException("Invalid parameters");
-
             var responseResult = Strategy.Execute();
             return responseResult;
         }
