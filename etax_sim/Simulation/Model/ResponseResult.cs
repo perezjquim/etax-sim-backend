@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 
-namespace eTaxSim.Simulation
+namespace eTaxSim.Simulation.Model
 {
     public class ResponseResult
     {
