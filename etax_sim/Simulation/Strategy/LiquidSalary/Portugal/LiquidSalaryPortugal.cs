@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace eTaxSim.Simulation.Strategy.LiquidSalary.Portugal
 {
-    internal partial class LiquidSalaryPortugal : IStrategyGlobal
+    internal partial class LiquidSalaryPortugal : IStrategy
     {
         public ResponseResult Execute()
         {

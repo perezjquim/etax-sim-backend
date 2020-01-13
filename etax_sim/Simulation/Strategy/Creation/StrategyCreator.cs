@@ -1,15 +1,29 @@
 ﻿using System;
+using System.Reflection;
+using eTaxSim.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace eTaxSim.Simulation.Strategy.Creation
 {
     public class StrategyCreator
     {
+        private readonly AppDbContext _context;
 
-        public IStrategy FactoryMethod(string aClassName)
+        public StrategyCreator(AppDbContext aContext)
         {
-            var strategy = FindImplementClass(aClassName);
+            this._context = aContext;
+        }
 
-            //strategy.SetStrategyParameters(Country aCountry, Region aRegion, string aStrategy, IDictionary<string, string> aParametersDictionary);
+        public IStrategy FactoryMethod(int aStrategy)
+        {
+            var strategyModel = _context.mStrategy.Find(aStrategy);
+
+            var strategy = FindImplementClass(strategyModel.ImplementingClass);
+
+            var a = strategyModel.ParamByStrategy;
+
+
+            strategy.IsValidParameters();
 
             return strategy;
         }
@@ -24,7 +38,7 @@ namespace eTaxSim.Simulation.Strategy.Creation
             }
             catch (Exception e)
             {
-                ArgumentException argEx = new ArgumentException("Class name not found", aClassName, e);
+                var argEx = new ArgumentException("Class name not found", aClassName, e);
                 throw argEx;
             }
 

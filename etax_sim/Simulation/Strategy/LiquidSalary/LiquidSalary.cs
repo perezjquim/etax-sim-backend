@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace eTaxSim.Simulation.Strategy.LiquidSalary
 {
-    public class LiquidSalary : IStrategyGlobal
+    public class LiquidSalary : IStrategy
     {
         public Country Country { get; set; }
         public Region Region { get; set; }

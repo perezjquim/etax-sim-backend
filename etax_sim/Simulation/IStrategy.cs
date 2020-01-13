@@ -9,5 +9,7 @@ namespace eTaxSim.Simulation
         ResponseResult Execute();
 
         void SetStrategyParameters(Country aCountry, Region aRegion, string aStrategy, IDictionary<string, string> aParametersDictionary);
+
+        bool IsValidParameters();
     }
 }
