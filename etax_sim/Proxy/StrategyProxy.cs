@@ -40,7 +40,7 @@ namespace eTaxSim.Proxy
             foreach (ParamByStrategy param in aStrategy.ParamByStrategy)
             {
                 aContext.Entry(param).Collection("ParamAllowedValue").Load();
-                foreach(ParamAllowedValue paramValue in param.ParamAllowedValue)
+                foreach (ParamAllowedValue paramValue in param.ParamAllowedValue)
                 {
                     aContext.Entry(paramValue).Reference("RuleAllowedValue").Load();
                 }
@@ -80,7 +80,7 @@ namespace eTaxSim.Proxy
                             {
                                 var paramEnumValues = param.ParamAllowedValue;
                                 var result = this.verifyAllowedValues(paramEnumValues, inputValue);
-                                if(result == false)
+                                if (result == false)
                                 {
                                     return new { type = "E", msg = "InvalidParameterValue" };
                                 }
@@ -140,7 +140,7 @@ namespace eTaxSim.Proxy
         {
             foreach (ParamAllowedValue value in aAllowedValues)
             {
-                if(value.RuleAllowedValue.Value == aInputValue)
+                if (value.RuleAllowedValue.Value == aInputValue)
                 {
                     return true;
                 }
