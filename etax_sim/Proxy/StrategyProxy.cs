@@ -40,6 +40,10 @@ namespace eTaxSim.Proxy
             foreach (ParamByStrategy param in aStrategy.ParamByStrategy)
             {
                 aContext.Entry(param).Collection("ParamAllowedValue").Load();
+                foreach(ParamAllowedValue paramValue in param.ParamAllowedValue)
+                {
+                    aContext.Entry(paramValue).Reference("RuleAllowedValue").Load();
+                }
             }
             //aContext.Entry(strategy).Collection("ParamByStrategy.StrategyParamRule").Load();
             return aStrategy;
@@ -47,7 +51,6 @@ namespace eTaxSim.Proxy
 
         public object VerifyStrategyParams(ICollection<ParamByStrategy> aStrategyParams, AppDbContext aContext, Dictionary<string, StringValues> aParameters)
         {
-            var a = aStrategyParams;
             //loop at aStrategyParams
             var paramsEnum = aStrategyParams.GetEnumerator();
             while (paramsEnum.MoveNext())
@@ -73,9 +76,14 @@ namespace eTaxSim.Proxy
                                     return new { type = "E", msg = "InvalidParameterValue" };
                                 }
                             }
-                            else
+                            else//not have rule, verify allowed params
                             {
-                                //not have rule, verify allowed params
+                                var paramEnumValues = param.ParamAllowedValue;
+                                var result = this.verifyAllowedValues(paramEnumValues, inputValue);
+                                if(result == false)
+                                {
+                                    return new { type = "E", msg = "InvalidParameterValue" };
+                                }
                             }
                         }
                     }
@@ -128,9 +136,16 @@ namespace eTaxSim.Proxy
             }
         }
 
-        public bool verifyAllowedValues()
+        public bool verifyAllowedValues(ICollection<ParamAllowedValue> aAllowedValues, string aInputValue)
         {
-            return true;
+            foreach (ParamAllowedValue value in aAllowedValues)
+            {
+                if(value.RuleAllowedValue.Value == aInputValue)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }
