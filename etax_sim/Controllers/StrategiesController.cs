@@ -9,6 +9,7 @@ using eTaxSim.Models;
 using System.IO;
 using eTaxSim.Proxy;
 using Microsoft.Extensions.Primitives;
+using eTaxSim.Adapter;
 
 namespace eTaxSim.Controllers
 {
