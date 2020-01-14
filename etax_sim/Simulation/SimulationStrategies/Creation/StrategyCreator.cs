@@ -1,9 +1,8 @@
-﻿using System;
-using System.Reflection;
-using eTaxSim.Models;
-using Microsoft.AspNetCore.Mvc;
+﻿using eTaxSim.Models;
+using System;
+using System.Collections.Generic;
 
-namespace eTaxSim.Simulation.Strategy.Creation
+namespace eTaxSim.Simulation.SimulationStrategies.Creation
 {
     public class StrategyCreator
     {
@@ -14,16 +13,10 @@ namespace eTaxSim.Simulation.Strategy.Creation
             this._context = aContext;
         }
 
-        public IStrategy FactoryMethod(int aStrategy)
+        public IStrategy FactoryMethod(Country aCountry, Region aRegion, Strategy aStrategy, IDictionary<string, object> aParametersDictionary)
         {
-            var strategyModel = _context.mStrategy.Find(aStrategy);
-
-            var strategy = FindImplementClass(strategyModel.ImplementingClass);
-
-            var a = strategyModel.ParamByStrategy;
-
-
-            strategy.IsValidParameters();
+            var strategy = FindImplementClass(aStrategy.ImplementingClass);
+            strategy.SetStrategyParameters(aCountry, aRegion, aParametersDictionary);
 
             return strategy;
         }

@@ -2,15 +2,10 @@
 using eTaxSim.Simulation.Model;
 using System.Collections.Generic;
 
-namespace eTaxSim.Simulation.Strategy.TaxReturn
+namespace eTaxSim.Simulation.SimulationStrategies.LiquidSalary.Portugal.Madeira
 {
-    public class TaxReturn : IStrategy
+    public class LiquidSalaryMadeira : IStrategy
     {
-        public Country Country { get; set; }
-        public Region Region { get; set; }
-
-        //public Strategy;
-
         public ResponseResult Execute()
         {
             throw new System.NotImplementedException();

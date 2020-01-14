@@ -2,10 +2,14 @@
 using eTaxSim.Simulation.Model;
 using System.Collections.Generic;
 
-namespace eTaxSim.Simulation.Strategy.LiquidSalary.Portugal
+namespace eTaxSim.Simulation.SimulationStrategies.LiquidSalary
 {
-    internal partial class LiquidSalaryPortugal : IStrategy
+    public class LiquidSalary : IStrategy
     {
+        public Country Country { get; set; }
+        public Region Region { get; set; }
+
+
         public ResponseResult Execute()
         {
             throw new System.NotImplementedException();

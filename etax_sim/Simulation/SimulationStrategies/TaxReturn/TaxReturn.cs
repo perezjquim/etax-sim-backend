@@ -2,13 +2,14 @@
 using eTaxSim.Simulation.Model;
 using System.Collections.Generic;
 
-namespace eTaxSim.Simulation.Strategy.LiquidSalary
+namespace eTaxSim.Simulation.SimulationStrategies.TaxReturn
 {
-    public class LiquidSalary : IStrategy
+    public class TaxReturn : IStrategy
     {
         public Country Country { get; set; }
         public Region Region { get; set; }
 
+        //public Strategy;
 
         public ResponseResult Execute()
         {
