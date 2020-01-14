@@ -1,7 +1,9 @@
 ﻿using eTaxSim.Models;
 using eTaxSim.Simulation.Model;
-using eTaxSim.Util.Map;
+using System;
+using System.Collections;
 using System.Collections.Generic;
+using eTaxSim.Simulation.SimulationStrategies.LiquidSalary.Util;
 
 namespace eTaxSim.Simulation.SimulationStrategies.LiquidSalary.Portugal
 {
@@ -10,85 +12,73 @@ namespace eTaxSim.Simulation.SimulationStrategies.LiquidSalary.Portugal
         private Country Country { get; set; }
         private Region Region { get; set; }
         private Parameters Param { get; set; }
+        private LiquidSalaryPortugalModel model { get; set; }
 
-        private const string BASE_SALARY = "base_salary";
-        private const string HOLIDAY_ALLOWANCE = "holiday_allowance";
-        private const string CHRISTMAS_SUBSIDY = "Christmas_subsidy";
-        private const string TWELFTHS = "twelfths";
-        private const string TWELFTHS_WHOLE = "whole";
-        private const string TWELFTHS_50 = "50percent";
-        private const string TWELFTHS_100 = "100percent";
-
-        public ResponseResult Execute()
-        {
-            var result = new ResponseResult();
-
-
-
-
-
-
-            return result;
-        }
+        private const string I_BASE_SALARY = "base_salary";
+        private const string I_HOLIDAY_ALLOWANCE = "holiday_allowance";
+        private const string I_CHRISTMAS_SUBSIDY = "Christmas_subsidy";
+        private const string I_TWELFTHS = "twelfths";
+        private const string O_LIQUID_SALARY = "liquid_salary";
 
         public void SetStrategyParameters(Country aCountry, Region aRegion, IDictionary<string, object> aParametersDictionary)
         {
             this.Country = aCountry;
             this.Region = aRegion;
             this.Param = new Parameters(aParametersDictionary);
+
+            this.model = new LiquidSalaryPortugalModel();
+            LoadParamToModel();
         }
 
-        private double CalculateLiquidSalary()
+        public ResponseResult Execute()
         {
-            var salary = Param.GetDouble(BASE_SALARY);
-
-            var ss = getFromSomewhereSS();
-            var irs = getFromSomewhereIRS();
-
-            var liquidSalary = salary - (salary * ss) - (salary * irs);
 
 
+
+
+            LiquidSalaryPortugalCalculator calculator = new LiquidSalaryPortugalCalculator(model);
+            calculator.Calculate();
+
+
+            IDictionary<string, object> returnParameters = new Dictionary<string, object>();
+
+            returnParameters.Add(O_LIQUID_SALARY, model.LiquidSalary);
+
+
+
+
+
+            var result = new ResponseResult { Parameters = returnParameters };
+            return result;
         }
 
-        private double CalculateTwelfths(double aSalary)
+        private void LoadParamToModel()
         {
-            var holiday = Param.GetBool(HOLIDAY_ALLOWANCE);
-            var christmas = Param.GetBool(CHRISTMAS_SUBSIDY);
-            var twelfths = Param.GetString(TWELFTHS);
+            model.BaseSalary = Param.GetDouble(I_BASE_SALARY);
+            model.ChristmasSubsidy = Param.GetBool(I_HOLIDAY_ALLOWANCE);
+            model.HolidaySubsidy = Param.GetBool(I_CHRISTMAS_SUBSIDY);
+            model.Twelfths = Param.GeTwelfths(I_TWELFTHS);
 
-            var holidayValue = CalculateSubsidy(holiday, twelfths, aSalary);
-            var christmasValue = CalculateSubsidy(christmas, twelfths, aSalary);
+            model.IRS = CalculateIRSFromSalary(model.BaseSalary);
+            model.SS = CalculateSSFromSalary(model.BaseSalary);
 
-            return holidayValue + christmasValue;
+            RedefineModel();
         }
 
-        private double CalculateSubsidy(bool aSubsidy, string aTwelfths, double aSalary)
+
+
+        private double CalculateSSFromSalary(double aSalary)
         {
-            if (aSubsidy)
-            {
-                switch (aTwelfths)
-                {
-                    case TWELFTHS_WHOLE:
-                        return 0;
-                    case TWELFTHS_50:
-                        return (aSalary / 2) / 12;
-                    case TWELFTHS_100:
-                        return aSalary / 12;
-                }
-            }
-
-            return 0;
+            throw new NotImplementedException();
         }
 
-        private double getFromSomewhereSS()
+        private double CalculateIRSFromSalary(double aSalary)
         {
-            // TODO
-            return 11;
+            throw new NotImplementedException();
         }
-        private double getFromSomewhereIRS()
-        {
-            // TODO
-            return 14.4;
-        }
+
+        protected virtual void RedefineModel() { }
     }
+
+
 }

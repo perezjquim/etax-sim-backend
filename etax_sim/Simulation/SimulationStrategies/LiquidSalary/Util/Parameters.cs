@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
-namespace eTaxSim.Util.Map
+namespace eTaxSim.Simulation.SimulationStrategies.LiquidSalary.Util
 {
-    public class Parameters : IMapHelper
+    public class Parameters
     {
         private readonly IDictionary<string, object> MapParameters;
 
@@ -57,6 +58,27 @@ namespace eTaxSim.Util.Map
             }
             string value = mapValue.ToString();
             return value;
+        }
+
+        public Twelfths GeTwelfths(string aKey)
+        {
+            dynamic mapValue = MapParameters[aKey];
+            Twelfths myEnum;
+
+            if (mapValue.GetType() is string)
+            {
+                myEnum = convertToTwelfths(mapValue);
+                return myEnum;
+            }
+            myEnum = convertToTwelfths(mapValue.ToString());
+            return myEnum;
+
+        }
+
+        private Twelfths convertToTwelfths(string value)
+        {
+            Twelfths myEnum = (Twelfths)Enum.Parse(typeof(Twelfths), value, true);
+            return myEnum;
         }
     }
 }
