@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using eTaxSim.Models;
 
 namespace eTaxSim.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200114193831_new25")]
+    partial class new25
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -383,11 +385,11 @@ namespace eTaxSim.Migrations
                     b.Property<int>("CountryId")
                         .HasColumnName("CountryId");
 
+                    b.Property<int>("ParentStrategyId")
+                        .HasColumnName("ParentStrategyId");
+
                     b.Property<int>("RegionId")
                         .HasColumnName("RegionId");
-
-                    b.Property<int>("StrategyByCountryId")
-                        .HasColumnName("StrategyByCountryId");
 
                     b.Property<int>("StrategyId")
                         .HasColumnName("StrategyId");
@@ -396,9 +398,9 @@ namespace eTaxSim.Migrations
 
                     b.HasIndex("CountryId");
 
-                    b.HasIndex("RegionId");
+                    b.HasIndex("ParentStrategyId");
 
-                    b.HasIndex("StrategyByCountryId");
+                    b.HasIndex("RegionId");
 
                     b.HasIndex("StrategyId");
 
@@ -518,14 +520,14 @@ namespace eTaxSim.Migrations
                         .HasForeignKey("CountryId")
                         .OnDelete(DeleteBehavior.Cascade);
 
+                    b.HasOne("eTaxSim.Models.StrategyByCountry", "StrategyByCountry")
+                        .WithMany("StrategyByCountryByRegion")
+                        .HasForeignKey("ParentStrategyId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("eTaxSim.Models.Region", "Region")
                         .WithMany()
                         .HasForeignKey("RegionId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("eTaxSim.Models.StrategyByCountry", "StrategyByCountry")
-                        .WithMany("StrategyByCountryByRegion")
-                        .HasForeignKey("StrategyByCountryId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("eTaxSim.Models.Strategy", "Strategy")

@@ -3,16 +3,20 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Primitives;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
 
 namespace eTaxSim.Proxy
 {
     public class StrategyProxy : IProxy
     {
-        public object OnRequest(Dictionary<string, StringValues> aParameters, Strategy aStrategy, AppDbContext aContext)
+        public object OnRequest(Dictionary<string, StringValues> aParameters, Strategy aStrategy, AppDbContext aContext, int aCountryId, int aRegionId)
         {
             //verify strategy params name and value
-            var strategyParams = this.GetStrategyParams(aStrategy, aContext);
-            var paramsCheck = this.VerifyStrategyParams(strategyParams.Value.ParamByStrategy, aContext, aParameters);
+            var strategyParams = this.CheckIfHaveParent(aStrategy.Id, aCountryId, aRegionId, aContext);
+            var paramsCheck = this.VerifyStrategyParams(strategyParams, aContext, aParameters);
+            //var strategyParams = this.GetStrategyParams(aStrategy, aContext);
+            //var paramsCheck = this.VerifyStrategyParams(strategyParams.Value.ParamByStrategy, aContext, aParameters);
             var properties = paramsCheck.GetType().GetProperties();
             //if(paramsCheck == true)
             var type = properties[0].GetValue(paramsCheck,null);
@@ -47,6 +51,58 @@ namespace eTaxSim.Proxy
             }
             //aContext.Entry(strategy).Collection("ParamByStrategy.StrategyParamRule").Load();
             return aStrategy;
+        }
+
+        public ICollection<ParamByStrategy> CheckIfHaveParent(int aStrategyId, int aCountryId, int aRegionId, AppDbContext aContext)
+        {
+            var childStrategy = aContext.mStrategyByCountryByRegion.Where(s => s.StrategyId == aStrategyId && s.CountryId == aCountryId && s.RegionId == aRegionId).
+                //Include("Strategy.ParamByStrategy.StrategyParamRule.ParamAllowedValue.RuleAllowedValue").
+                FirstOrDefault();
+            if (childStrategy != null)
+            {
+                aContext.Entry(childStrategy).Reference("Strategy").Load();
+                aContext.Entry(childStrategy.Strategy).Collection("ParamByStrategy").Load();
+                foreach (ParamByStrategy paramByStrategy in childStrategy.Strategy.ParamByStrategy)
+                {
+                    aContext.Entry(paramByStrategy).Reference("StrategyParamRule").Load();
+                }
+                foreach (ParamByStrategy paramByStrategy in childStrategy.Strategy.ParamByStrategy)
+                {
+                    aContext.Entry(paramByStrategy).Collection("ParamAllowedValue").Load();
+                    foreach (ParamAllowedValue paramAllowedValue in paramByStrategy.ParamAllowedValue)
+                    {
+                        aContext.Entry(paramAllowedValue).Reference("RuleAllowedValue").Load();
+                    }
+                }
+            }
+            //get parent strategy
+            var parentStrategy = aContext.mStrategyByCountry.Where(s => s.Id == childStrategy.StrategyByCountryId && s.CountryId == aCountryId).FirstOrDefault();
+            if (parentStrategy != null)
+            {
+                aContext.Entry(parentStrategy).Reference("Strategy").Load();
+                aContext.Entry(parentStrategy.Strategy).Collection("ParamByStrategy").Load();
+                foreach (ParamByStrategy paramByStrategy in parentStrategy.Strategy.ParamByStrategy)
+                {
+                    aContext.Entry(paramByStrategy).Reference("StrategyParamRule").Load();
+                }
+                foreach (ParamByStrategy paramByStrategy in parentStrategy.Strategy.ParamByStrategy)
+                {
+                    aContext.Entry(paramByStrategy).Collection("ParamAllowedValue").Load();
+                    foreach (ParamAllowedValue paramAllowedValue in paramByStrategy.ParamAllowedValue)
+                    {
+                        aContext.Entry(paramAllowedValue).Reference("RuleAllowedValue").Load();
+                    }
+                }
+            }
+            var parameters = parentStrategy.Strategy.ParamByStrategy;
+            if (childStrategy != null)
+            { 
+                foreach (ParamByStrategy param in childStrategy.Strategy.ParamByStrategy)
+                {
+                    parameters.Add(param);
+                }
+            }
+            return parameters;
         }
 
         public object VerifyStrategyParams(ICollection<ParamByStrategy> aStrategyParams, AppDbContext aContext, Dictionary<string, StringValues> aParameters)
