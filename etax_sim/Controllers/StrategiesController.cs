@@ -86,15 +86,8 @@ namespace eTaxSim.Controllers
         [HttpPost("{id}/{countryId}/{regionId}/evaluate")]
         public ActionResult<Strategy> PostStrategySimul(int id, int countryId, int regionId, IFormCollection form)
         {
-            //var i = input;
-            /*using (var reader = new StreamReader(Request.Form))
-            {
-                var body = reader.ReadToEnd();
-                var first = body.Trim();
-                // Do something
-            }*/
-            //form.TryGetValue("name",out var item);
             var strategy = _context.mStrategy.Find(id);
+            //var strategy = _context.mStrategy.Where(s => s.Id == id).Include("").FirstOrDefault();
             if (strategy == null)
             {
                 return NotFound();
@@ -102,7 +95,7 @@ namespace eTaxSim.Controllers
             var body = form.ToDictionary(k => k.Key, v => v.Value);
             //var body = form.ToList();
             StrategyProxy proxy = new StrategyProxy();
-            var strategyResult = proxy.OnRequest(body, strategy, _context);
+            var strategyResult = proxy.OnRequest(body, strategy, _context, countryId, regionId);
             var properties = strategyResult.GetType().GetProperties();
             var resultType = properties[1].GetValue(strategyResult, null);
             var msg = properties[2].GetValue(strategyResult, null);

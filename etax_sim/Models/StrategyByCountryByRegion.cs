@@ -14,7 +14,7 @@ namespace eTaxSim.Models
 
         [Column("StrategyId")] public int StrategyId { get; set; }
 
-        //[Column("ParentStrategyId")] public int ParentStrategyId { get; set; }
+        [Column("StrategyByCountryId")] public int StrategyByCountryId { get; set; }
 
         //[Column("Description")] public String Description { get; set; }
 
@@ -28,7 +28,7 @@ namespace eTaxSim.Models
         //[ForeignKey(nameof(ParentStrategyId))]
         // public Strategy ParentStrategy { get; set; }
 
-        //[ForeignKey(nameof(CountryId))]
+        //[ForeignKey(nameof(ParentStrategyId))]
         public StrategyByCountry StrategyByCountry { get; set; }
     }
 }

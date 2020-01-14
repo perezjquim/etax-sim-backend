@@ -11,7 +11,7 @@ namespace eTaxSim.Simulation.SimulationStrategies.LiquidSalary.Portugal
         public Twelfths Twelfths { get; set; }
         public bool HolidaySubsidy { get; set; }
         public bool ChristmasSubsidy { get; set; }
-        
+
         public double IRS { get; set; }
         public double SS { get; set; }
 
