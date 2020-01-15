@@ -79,7 +79,7 @@ namespace eTaxSim.Proxy
             }
             //get parent strategy
             int parentStrategyId;
-            if(childStrategy != null)
+            if (childStrategy != null)
             {
                 aContext.Entry(childStrategy).Reference("StrategyByCountry").Load();
                 parentStrategyId = childStrategy.StrategyByCountry.StrategyId;
@@ -128,10 +128,10 @@ namespace eTaxSim.Proxy
             var parameters = parentParameters;
             if (childParameters != null)
             {
-                            foreach (ParamByStrategy param in childParameters)
-            {
-                parameters.Add(param);
-            }
+                foreach (ParamByStrategy param in childParameters)
+                {
+                    parameters.Add(param);
+                }
             }
 
             return parameters;

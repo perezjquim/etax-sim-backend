@@ -1,7 +1,6 @@
 ﻿using eTaxSim.Models;
 using eTaxSim.Simulation.Model;
 using eTaxSim.Simulation.SimulationStrategies.LiquidSalary.Util;
-using System;
 using System.Collections.Generic;
 
 namespace eTaxSim.Simulation.SimulationStrategies.LiquidSalary.Portugal

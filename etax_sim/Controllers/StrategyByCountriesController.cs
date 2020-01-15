@@ -55,7 +55,7 @@ namespace eTaxSim.Controllers
             {
                 //Check if have exception to region
                 var regionExeption = _context.mStrategyByCountryByRegion.Where(r => r.CountryId == countryId && r.RegionId == regionId && r.StrategyByCountryId == countryStrategies[i].Id).Include("Strategy").FirstOrDefault();
-                if(regionExeption != null)
+                if (regionExeption != null)
                 {
                     countryStrategies[i].StrategyByCountryByRegion.Add(regionExeption);
                 }
