@@ -78,9 +78,19 @@ namespace eTaxSim.Proxy
                 }*/
             }
             //get parent strategy
-            var parentId = childStrategy == null ? aStrategyId : childStrategy.StrategyByCountryId;
+            int parentStrategyId;
+            if(childStrategy != null)
+            {
+                aContext.Entry(childStrategy).Reference("StrategyByCountry").Load();
+                parentStrategyId = childStrategy.StrategyByCountry.StrategyId;
+            }
+            else
+            {
+                parentStrategyId = aStrategyId;
+            }
+            //var parentId = childStrategy == null ? aStrategyId : childStrategy.StrategyByCountry.StrategyId;
 
-            var parentStrategy = aContext.mStrategyByCountry.Where(s => s.StrategyId == parentId && s.CountryId == aCountryId).FirstOrDefault();
+            var parentStrategy = aContext.mStrategyByCountry.Where(s => s.StrategyId == parentStrategyId && s.CountryId == aCountryId).FirstOrDefault();
             ICollection<ParamByStrategy> parentParameters = null;
             if (parentStrategy != null)
             {
