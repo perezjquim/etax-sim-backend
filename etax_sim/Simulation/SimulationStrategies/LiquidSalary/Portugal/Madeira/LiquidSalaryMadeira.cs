@@ -11,12 +11,8 @@ namespace eTaxSim.Simulation.SimulationStrategies.LiquidSalary.Portugal.Madeira
             throw new System.NotImplementedException();
         }
 
-        public bool IsValidParameters()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void SetStrategyParameters(Country aCountry, Region aRegion, string aStrategy, IDictionary<string, string> aParametersDictionary)
+        public void SetStrategyParameters(Country aCountry, Region aRegion,
+            IDictionary<string, object> aParametersDictionary)
         {
             throw new System.NotImplementedException();
         }

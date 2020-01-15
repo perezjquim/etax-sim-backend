@@ -78,7 +78,9 @@ namespace eTaxSim.Proxy
                 }*/
             }
             //get parent strategy
-            var parentStrategy = aContext.mStrategyByCountry.Where(s => s.Id == childStrategy.StrategyByCountryId && s.CountryId == aCountryId).FirstOrDefault();
+            var parentId = childStrategy == null ? aStrategyId : childStrategy.StrategyByCountryId;
+
+            var parentStrategy = aContext.mStrategyByCountry.Where(s => s.StrategyId == parentId && s.CountryId == aCountryId).FirstOrDefault();
             ICollection<ParamByStrategy> parentParameters = null;
             if (parentStrategy != null)
             {
@@ -114,10 +116,14 @@ namespace eTaxSim.Proxy
                 }
             }*/
             var parameters = parentParameters;
-            foreach (ParamByStrategy param in childParameters)
+            if (childParameters != null)
+            {
+                            foreach (ParamByStrategy param in childParameters)
             {
                 parameters.Add(param);
             }
+            }
+
             return parameters;
         }
 

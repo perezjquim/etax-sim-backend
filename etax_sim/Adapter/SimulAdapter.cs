@@ -13,13 +13,15 @@ namespace eTaxSim.Adapter
             var country = aContext.mCountries.Find(aCountryId);
             var region = aContext.mRegions.Find(aRegionId);
             var inputParamsResult = this.ConvertDictionary(aInputParameters);
-            Simulator simul = new Simulator(country, region, null, null, null, "", inputParamsResult);
+            Simulator simul = new Simulator(aContext, country, region, null, null, null, aStrategy, inputParamsResult);
+
+
             return simul;
         }
 
-        public Dictionary<string, string> ConvertDictionary(Dictionary<string, StringValues> aInputParameters)
+        public Dictionary<string, object> ConvertDictionary(Dictionary<string, StringValues> aInputParameters)
         {
-            Dictionary<string, string> inputParamsResult = new Dictionary<string, string>();
+            Dictionary<string, object> inputParamsResult = new Dictionary<string, object>();
             foreach (KeyValuePair<string, StringValues> param in aInputParameters)
             {
                 var value = param.Value.ToArray()[0];

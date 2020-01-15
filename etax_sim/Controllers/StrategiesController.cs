@@ -87,6 +87,9 @@ namespace eTaxSim.Controllers
         public ActionResult<Strategy> PostStrategySimul(int id, int countryId, int regionId, IFormCollection form)
         {
             var strategy = _context.mStrategy.Find(id);
+
+            _context.Entry(strategy).Collection("ParamByStrategy").Load();
+
             //var strategy = _context.mStrategy.Where(s => s.Id == id).Include("").FirstOrDefault();
             if (strategy == null)
             {
@@ -104,8 +107,8 @@ namespace eTaxSim.Controllers
             {
                 SimulAdapter simulAdapter = new SimulAdapter();
                 var simulInput = simulAdapter.OnAdapt(_context, strategy, countryId, regionId, body);
-                //simulInput.ExecuteSimulation();
-                return Ok(new { type = resultType, msg = msg });
+                var result = simulInput.ExecuteSimulation();
+                return Ok(result);
             }
             //enviar mensagem de erro.
             return BadRequest(new { type = resultType, msg = msg });

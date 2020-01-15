@@ -68,12 +68,12 @@ namespace eTaxSim.Simulation.SimulationStrategies.LiquidSalary.Portugal
 
         private double CalculateSSFromSalary(double aSalary)
         {
-            throw new NotImplementedException();
+            return 0.11;
         }
 
         private double CalculateIRSFromSalary(double aSalary)
         {
-            throw new NotImplementedException();
+            return 0.14;
         }
 
         protected virtual void RedefineModel() { }

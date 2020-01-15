@@ -15,12 +15,22 @@ namespace eTaxSim.Simulation.SimulationStrategies.LiquidSalary.Util
         public bool GetBool(string aKey)
         {
             dynamic mapValue = MapParameters[aKey];
+            bool value;
 
             if (mapValue.GetType() is bool)
             {
                 return mapValue;
             }
-            bool value = bool.Parse(mapValue);
+
+            try
+            {
+                value = bool.Parse(mapValue);
+            }
+            catch (Exception e)
+            {
+                value = mapValue.Equals("0");
+            }
+
             return value;
         }
 
