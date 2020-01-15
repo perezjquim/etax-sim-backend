@@ -48,14 +48,22 @@ namespace eTaxSim.Controllers
                 Where(s => !_context.mStrategyByCountryByRegion.Where(sRegion => sRegion.RegionId == regionId && sRegion.ParentStrategyId == s.StrategyId).
                 Select(sr => sr.CountryId).Contains(s.CountryId)).ToListAsync();*/
 
-            var countryStrategies = await _context.mStrategyByCountry.Where(s => s.CountryId == countryId).Include("Country").Include("Strategy").Include("StrategyByCountryByRegion").Include("StrategyByCountryByRegion.Strategy").ToListAsync();
+            var countryStrategies = await _context.mStrategyByCountry.Where(s => s.CountryId == countryId).Include("Country").Include("Strategy").ToListAsync();
+            //.Include("StrategyByCountryByRegion").Include("StrategyByCountryByRegion.Strategy").ToListAsync();
             List<StrategyByCountry> listResult = new List<StrategyByCountry>();
             for (var i = 0; i < countryStrategies.Count; i++)
             {
-                if (countryStrategies[i].StrategyByCountryByRegion.Count == 0 || countryStrategies[i].StrategyByCountryByRegion.First().RegionId == regionId)
+                //Check if have exception to region
+                var regionExeption = _context.mStrategyByCountryByRegion.Where(r => r.CountryId == countryId && r.RegionId == regionId && r.StrategyByCountryId == countryStrategies[i].Id).Include("Strategy").FirstOrDefault();
+                if(regionExeption != null)
+                {
+                    countryStrategies[i].StrategyByCountryByRegion.Add(regionExeption);
+                }
+                listResult.Add(countryStrategies[i]);
+                /*if (countryStrategies[i].StrategyByCountryByRegion.Count == 0 || countryStrategies[i].StrategyByCountryByRegion.First().RegionId == regionId)
                 {
                     listResult.Add(countryStrategies[i]);
-                }
+                }*/
             }
             /*Select(s => new
             {
