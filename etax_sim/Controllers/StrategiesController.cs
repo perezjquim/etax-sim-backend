@@ -86,9 +86,9 @@ namespace eTaxSim.Controllers
         [HttpPost("{id}/{countryId}/{regionId}/evaluate")]
         public ActionResult<Strategy> PostStrategySimul(int id, int countryId, int regionId, IFormCollection form)
         {
-            var strategy = _context.mStrategy.Find(id);
+            var strategy = _context.mStrategy.Where(s => s.Id == id && s.ImplementingClass != null).FirstOrDefault();
 
-            _context.Entry(strategy).Collection("ParamByStrategy").Load();
+            //_context.Entry(strategy).Collection("ParamByStrategy").Load();
 
             //var strategy = _context.mStrategy.Where(s => s.Id == id).Include("").FirstOrDefault();
             if (strategy == null)
