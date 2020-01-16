@@ -1,8 +1,4 @@
-﻿using eTaxSim.Simulation.SimulationStrategies.LiquidSalary.Portugal;
-using eTaxSim.Simulation.SimulationStrategies.LiquidSalary.Util;
-using Microsoft.AspNetCore.Identity.UI.V3.Pages.Account.Internal;
-
-namespace eTaxSim.Simulation.SimulationStrategies.LiquidSalary.Spain
+﻿namespace eTaxSim.Simulation.SimulationStrategies.LiquidSalary.Spain
 {
     internal class LiquidSalarySpainCalculator
     {

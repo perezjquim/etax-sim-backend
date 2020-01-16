@@ -1,8 +1,4 @@
-﻿using eTaxSim.Models;
-using eTaxSim.Simulation.Model;
-using System.Collections.Generic;
-
-namespace eTaxSim.Simulation.SimulationStrategies.LiquidSalary.Portugal.Madeira
+﻿namespace eTaxSim.Simulation.SimulationStrategies.LiquidSalary.Portugal.Madeira
 {
     internal class LiquidSalaryMadeira : LiquidSalaryPortugal
     {
