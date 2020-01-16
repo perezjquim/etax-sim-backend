@@ -8,7 +8,6 @@ namespace eTaxSim.Simulation.SimulationStrategies.Creation
     public class StrategyCreator
     {
         private readonly AppDbContext _context;
-        private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         private const string BASE_NAMESPACE = "eTaxSim.Simulation.SimulationStrategies";
 
@@ -19,16 +18,11 @@ namespace eTaxSim.Simulation.SimulationStrategies.Creation
 
         public IStrategy FactoryMethod(Country aCountry, Region aRegion, Strategy aStrategy, IDictionary<string, object> aParametersDictionary)
         {
-            Log.Info("This is just to inform you");
-            Log.Warn("Something you should consider. better check this out!!!");
-            Log.Error("oops!!something wrong");
-            Log.Fatal("you are dead, man!!!");
 
-            //var strategy = FindImplementClass(aStrategy.ImplementingClass);
-            //strategy.SetStrategyParameters(aCountry, aRegion, aParametersDictionary);
+            var strategy = FindImplementClass(aStrategy.ImplementingClass, aCountry, aRegion);
+            strategy.SetStrategyParameters(aCountry, aRegion, aParametersDictionary);
 
-            //return strategy;
-            return null;
+            return strategy;
         }
         // eTaxSim.Simulation.SimulationStrategies
         // eTaxSim.Simulation.SimulationStrategies.LiquidSalary.Portugal.Madeira.LiquidSalaryMadeira
@@ -38,8 +32,8 @@ namespace eTaxSim.Simulation.SimulationStrategies.Creation
         {
             IStrategy myObject;
 
-            var className = CreateClassName(aClassName, aRegion.Name);
-            var strategyPath = CreateStrategyPath(aCountry.Name, aRegion.Name);
+            var className = CreateClassName(aClassName, aRegion.Description);
+            var strategyPath = CreateStrategyPath(aClassName, aCountry.Description, aRegion.Description);
 
             var completePath = CreateCompletePath(BASE_NAMESPACE, strategyPath, className);
             try
@@ -51,8 +45,8 @@ namespace eTaxSim.Simulation.SimulationStrategies.Creation
             {
                 try
                 {
-                    className = CreateClassName(aClassName, aCountry.Name);
-                    strategyPath = CreateStrategyPath(aCountry.Name, null);
+                    className = CreateClassName(aClassName, aCountry.Description);
+                    strategyPath = CreateStrategyPath(aClassName, aCountry.Description, null);
 
                     completePath = CreateCompletePath(BASE_NAMESPACE, strategyPath, className);
 
@@ -75,9 +69,11 @@ namespace eTaxSim.Simulation.SimulationStrategies.Creation
             return completePath;
         }
 
-        private string CreateStrategyPath(string aCountry, string aRegion)
+        private string CreateStrategyPath(string aClassName, string aCountry, string aRegion)
         {
-            StringBuilder strategyPath = new StringBuilder(aCountry);
+            StringBuilder strategyPath = new StringBuilder(aClassName);
+            strategyPath.Append(".").Append(aCountry);
+
             if (!string.IsNullOrEmpty(aRegion))
             {
                 strategyPath.Append(".").Append(aRegion);
