@@ -10,6 +10,9 @@ namespace eTaxSim
 {
     public class Startup
     {
+
+        private static readonly log4net.ILog logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -31,6 +34,8 @@ namespace eTaxSim
                     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
                 })
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            logger.Info("Booting up application");
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

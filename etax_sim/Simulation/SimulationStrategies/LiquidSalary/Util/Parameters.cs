@@ -26,7 +26,7 @@ namespace eTaxSim.Simulation.SimulationStrategies.LiquidSalary.Util
             {
                 value = bool.Parse(mapValue);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 value = mapValue.Equals("0");
             }

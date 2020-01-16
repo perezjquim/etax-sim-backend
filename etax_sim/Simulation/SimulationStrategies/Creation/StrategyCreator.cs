@@ -10,6 +10,7 @@ namespace eTaxSim.Simulation.SimulationStrategies.Creation
         private readonly AppDbContext _context;
 
         private const string BASE_NAMESPACE = "eTaxSim.Simulation.SimulationStrategies";
+        private static readonly log4net.ILog logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         public StrategyCreator(AppDbContext aContext)
         {
@@ -20,13 +21,11 @@ namespace eTaxSim.Simulation.SimulationStrategies.Creation
         {
 
             var strategy = FindImplementClass(aStrategy.ImplementingClass, aCountry, aRegion);
-            strategy.SetStrategyParameters(aCountry, aRegion, aParametersDictionary);
 
+
+            strategy.SetStrategyParameters(aCountry, aRegion, aParametersDictionary);
             return strategy;
         }
-        // eTaxSim.Simulation.SimulationStrategies
-        // eTaxSim.Simulation.SimulationStrategies.LiquidSalary.Portugal.Madeira.LiquidSalaryMadeira
-        // eTaxSim.Simulation.SimulationStrategies.TaxReturn.Portugal.TaxReturnPortugal
 
         protected IStrategy FindImplementClass(string aClassName, Country aCountry, Region aRegion)
         {
@@ -40,11 +39,14 @@ namespace eTaxSim.Simulation.SimulationStrategies.Creation
             {
                 var type = Type.GetType(completePath);
                 myObject = (IStrategy)Activator.CreateInstance(type);
+
             }
             catch (Exception)
             {
                 try
                 {
+                    logger.Warn("There is no regional strategy for this simulation");
+
                     className = CreateClassName(aClassName, aCountry.Description);
                     strategyPath = CreateStrategyPath(aClassName, aCountry.Description, null);
 
@@ -52,13 +54,17 @@ namespace eTaxSim.Simulation.SimulationStrategies.Creation
 
                     var type = Type.GetType(completePath);
                     myObject = (IStrategy)Activator.CreateInstance(type);
+
                 }
                 catch (Exception e)
                 {
                     var argEx = new ArgumentException("Class name not found", aClassName, e);
+                    logger.Error("There is no class with name " + aClassName, e);
                     throw argEx;
                 }
             }
+
+            logger.Info("Implementing class: " + completePath);
 
             return myObject;
         }
