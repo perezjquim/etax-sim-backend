@@ -3,19 +3,17 @@ using eTaxSim.Simulation.Model;
 using eTaxSim.Simulation.SimulationStrategies.LiquidSalary.Util;
 using System.Collections.Generic;
 
-namespace eTaxSim.Simulation.SimulationStrategies.LiquidSalary.Portugal
+namespace eTaxSim.Simulation.SimulationStrategies.LiquidSalary.Spain
 {
-    internal class LiquidSalaryPortugal : IStrategy
+    internal class LiquidSalarySpain : IStrategy
     {
         protected Country Country { get; set; }
         protected Region Region { get; set; }
         protected Parameters Param { get; set; }
-        protected LiquidSalaryPortugalModel model { get; set; }
+        protected LiquidSalarySpainModel model { get; set; }
 
         private const string I_BASE_SALARY = "base_salary";
-        private const string I_HOLIDAY_ALLOWANCE = "holiday_allowance";
-        private const string I_CHRISTMAS_SUBSIDY = "Christmas_subsidy";
-        private const string I_TWELFTHS = "twelfths";
+        private const string I_NO_SALARY = "no_salary";
         private const string O_LIQUID_SALARY = "liquid_salary";
 
         public void SetStrategyParameters(Country aCountry, Region aRegion, IDictionary<string, object> aParametersDictionary)
@@ -24,27 +22,18 @@ namespace eTaxSim.Simulation.SimulationStrategies.LiquidSalary.Portugal
             this.Region = aRegion;
             this.Param = new Parameters(aParametersDictionary);
 
-            this.model = new LiquidSalaryPortugalModel();
+            this.model = new LiquidSalarySpainModel();
             LoadParamToModel();
         }
 
         public ResponseResult Execute()
         {
-
-
-
-
-            LiquidSalaryPortugalCalculator calculator = new LiquidSalaryPortugalCalculator(model);
+            LiquidSalarySpainCalculator calculator = new LiquidSalarySpainCalculator(model);
             calculator.Calculate();
-
 
             IDictionary<string, object> returnParameters = new Dictionary<string, object>();
 
             returnParameters.Add(O_LIQUID_SALARY, model.LiquidSalary);
-
-
-
-
 
             var result = new ResponseResult { Parameters = returnParameters };
             return result;
@@ -53,26 +42,9 @@ namespace eTaxSim.Simulation.SimulationStrategies.LiquidSalary.Portugal
         private void LoadParamToModel()
         {
             model.BaseSalary = Param.GetDouble(I_BASE_SALARY);
-            model.ChristmasSubsidy = Param.GetBool(I_HOLIDAY_ALLOWANCE);
-            model.HolidaySubsidy = Param.GetBool(I_CHRISTMAS_SUBSIDY);
-            model.Twelfths = Param.GeTwelfths(I_TWELFTHS);
-
-            model.IRS = CalculateIRSFromSalary(model.BaseSalary);
-            model.SS = CalculateSSFromSalary(model.BaseSalary);
+            model.NumberSalary = Param.GetInt(I_NO_SALARY);
 
             RedefineModel();
-        }
-
-
-
-        private double CalculateSSFromSalary(double aSalary)
-        {
-            return 0.11;
-        }
-
-        private double CalculateIRSFromSalary(double aSalary)
-        {
-            return 0.14;
         }
 
         protected virtual void RedefineModel() { }
