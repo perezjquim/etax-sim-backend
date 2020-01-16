@@ -165,6 +165,10 @@ namespace eTaxSim.Proxy
         public object VerifyStrategyParams(ICollection<ParamByStrategy> aStrategyParams, AppDbContext aContext, Dictionary<string, StringValues> aParameters)
         {
             //loop at aStrategyParams
+            if(aStrategyParams == null)
+            {
+                return new { type = "E", msg = "NoParamsConfigured" };
+            }
             var paramsEnum = aStrategyParams.GetEnumerator();
             while (paramsEnum.MoveNext())
             {
