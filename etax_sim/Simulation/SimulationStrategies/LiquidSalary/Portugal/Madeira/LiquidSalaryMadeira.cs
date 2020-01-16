@@ -4,17 +4,17 @@ using System.Collections.Generic;
 
 namespace eTaxSim.Simulation.SimulationStrategies.LiquidSalary.Portugal.Madeira
 {
-    public class LiquidSalaryMadeira : IStrategy
+    internal class LiquidSalaryMadeira : LiquidSalaryPortugal
     {
-        public ResponseResult Execute()
+        protected override void RedefineModel()
         {
-            throw new System.NotImplementedException();
+            model.IRS = CalculateIRSFromSalary(model.BaseSalary);
         }
 
-        public void SetStrategyParameters(Country aCountry, Region aRegion,
-            IDictionary<string, object> aParametersDictionary)
+        private double CalculateIRSFromSalary(double aSalary)
         {
-            throw new System.NotImplementedException();
+            return 0.11;
         }
+
     }
 }
