@@ -8,6 +8,7 @@ namespace eTaxSim.Simulation.SimulationStrategies.Creation
     public class StrategyCreator
     {
         private readonly AppDbContext _context;
+        private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         private const string BASE_NAMESPACE = "eTaxSim.Simulation.SimulationStrategies";
 
@@ -18,12 +19,16 @@ namespace eTaxSim.Simulation.SimulationStrategies.Creation
 
         public IStrategy FactoryMethod(Country aCountry, Region aRegion, Strategy aStrategy, IDictionary<string, object> aParametersDictionary)
         {
-
+            Log.Info("This is just to inform you");
+            Log.Warn("Something you should consider. better check this out!!!");
+            Log.Error("oops!!something wrong");
+            Log.Fatal("you are dead, man!!!");
 
             //var strategy = FindImplementClass(aStrategy.ImplementingClass);
-            strategy.SetStrategyParameters(aCountry, aRegion, aParametersDictionary);
+            //strategy.SetStrategyParameters(aCountry, aRegion, aParametersDictionary);
 
-            return strategy;
+            //return strategy;
+            return null;
         }
         // eTaxSim.Simulation.SimulationStrategies
         // eTaxSim.Simulation.SimulationStrategies.LiquidSalary.Portugal.Madeira.LiquidSalaryMadeira
