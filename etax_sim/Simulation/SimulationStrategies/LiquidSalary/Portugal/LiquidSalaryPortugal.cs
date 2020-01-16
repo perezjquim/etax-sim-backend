@@ -7,10 +7,10 @@ namespace eTaxSim.Simulation.SimulationStrategies.LiquidSalary.Portugal
 {
     internal class LiquidSalaryPortugal : IStrategy
     {
-        private Country Country { get; set; }
-        private Region Region { get; set; }
-        private Parameters Param { get; set; }
-        private LiquidSalaryPortugalModel model { get; set; }
+        protected Country Country { get; set; }
+        protected Region Region { get; set; }
+        protected Parameters Param { get; set; }
+        protected LiquidSalaryPortugalModel model { get; set; }
 
         private const string I_BASE_SALARY = "base_salary";
         private const string I_HOLIDAY_ALLOWANCE = "holiday_allowance";
