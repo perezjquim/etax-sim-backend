@@ -57,9 +57,15 @@ namespace eTaxSim.Controllers
                 var regionExeption = _context.mStrategyByCountryByRegion.Where(r => r.CountryId == countryId && r.RegionId == regionId && r.StrategyByCountryId == countryStrategies[i].Id).Include("Strategy").FirstOrDefault();
                 if (regionExeption != null)
                 {
-                    countryStrategies[i].StrategyByCountryByRegion.Add(regionExeption);
+                    if(regionExeption.Strategy.ImplementingClass != null)
+                    {
+                        countryStrategies[i].StrategyByCountryByRegion.Add(regionExeption);
+                    }
                 }
-                listResult.Add(countryStrategies[i]);
+                if(countryStrategies[i].Strategy.ImplementingClass != null)
+                {
+                    listResult.Add(countryStrategies[i]);
+                }
                 /*if (countryStrategies[i].StrategyByCountryByRegion.Count == 0 || countryStrategies[i].StrategyByCountryByRegion.First().RegionId == regionId)
                 {
                     listResult.Add(countryStrategies[i]);
