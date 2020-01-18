@@ -1,4 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
+
 <xs:schema version="1.01" elementFormDefault="unqualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <!-- Copyright 2008 by Roger Knapp, Licensed under the Apache License, Version 2.0 -->
   <xs:annotation>
@@ -66,8 +67,8 @@ Legal:
       <xs:field xpath="@name" />
     </xs:key>
     <xs:keyref name="appenderExists" refer="appenderNamesKey">
-      <xs:selector xpath=".//appender-ref"/>
-      <xs:field xpath="@ref"/>
+      <xs:selector xpath=".//appender-ref" />
+      <xs:field xpath="@ref" />
     </xs:keyref>
   </xs:element>
   <xs:complexType name="log4net">

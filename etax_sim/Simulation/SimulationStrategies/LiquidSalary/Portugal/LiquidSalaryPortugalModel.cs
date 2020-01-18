@@ -18,7 +18,5 @@ namespace eTaxSim.Simulation.SimulationStrategies.LiquidSalary.Portugal
         public double LiquidSalary { get; set; }
         public double LiquidTwelfthsHolidaySubsidy { get; set; }
         public double LiquidTwelfthsChristmasSubsidy { get; set; }
-
-
     }
 }

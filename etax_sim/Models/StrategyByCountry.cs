@@ -11,6 +11,7 @@ namespace eTaxSim.Models
         {
             StrategyByCountryByRegion = new HashSet<StrategyByCountryByRegion>();
         }
+
         [Key] [Column("ID")] public int Id { get; set; }
 
         [Column("CountryId")] public int CountryId { get; set; }

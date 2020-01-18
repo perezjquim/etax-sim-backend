@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -12,7 +11,7 @@ namespace eTaxSim.Models
 
         [Column("StrategyId")] public int StrategyId { get; set; }
 
-        [Column("ParamName")] public String ParamName { get; set; }
+        [Column("ParamName")] public string ParamName { get; set; }
 
         [Column("IsInput")] public bool IsInput { get; set; }
 

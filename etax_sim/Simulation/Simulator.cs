@@ -1,12 +1,16 @@
-﻿using eTaxSim.Models;
+﻿using System.Collections.Generic;
+using System.Reflection;
+using eTaxSim.Models;
 using eTaxSim.Simulation.Model;
 using eTaxSim.Simulation.SimulationStrategies.Creation;
-using System.Collections.Generic;
+using log4net;
 
 namespace eTaxSim.Simulation
 {
     public class Simulator
     {
+        private static readonly ILog logger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        private readonly AppDbContext _context;
         public Country Country { get; set; }
         public Region Region { get; set; }
         public Company Company { get; set; }
@@ -14,26 +18,27 @@ namespace eTaxSim.Simulation
         public Role Role { get; set; }
         public Strategy Strategy { get; set; }
         public IDictionary<string, object> ParametersDictionary { get; set; }
-        private readonly AppDbContext _context;
-        private static readonly log4net.ILog logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         public Simulator(AppDbContext aContext)
         {
-            this._context = aContext;
+            _context = aContext;
         }
-        public Simulator(AppDbContext aContext, Country aCountry, Region aRegion, Company aCompany, Sector aSector, Role aRole, Strategy aStrategy, IDictionary<string, object> aParametersDictionary)
+
+        public Simulator(AppDbContext aContext, Country aCountry, Region aRegion, Company aCompany, Sector aSector,
+            Role aRole, Strategy aStrategy, IDictionary<string, object> aParametersDictionary)
         {
-            this._context = aContext;
-            this.Country = aCountry;
-            this.Region = aRegion;
-            this.Company = aCompany;
-            this.Sector = aSector;
-            this.Role = aRole;
-            this.Strategy = aStrategy;
-            this.ParametersDictionary = aParametersDictionary;
+            _context = aContext;
+            Country = aCountry;
+            Region = aRegion;
+            Company = aCompany;
+            Sector = aSector;
+            Role = aRole;
+            Strategy = aStrategy;
+            ParametersDictionary = aParametersDictionary;
 
             // TODO: log to DB here entry parameters
-            logger.Info("Starting Simulation " + Strategy.Name + " for " + Region.Description + ", " + Country.Description);
+            logger.Info("Starting Simulation " + Strategy.Name + " for " + Region.Description + ", " +
+                        Country.Description);
         }
 
         public ResponseResult ExecuteSimulation()

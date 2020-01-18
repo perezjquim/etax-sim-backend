@@ -9,7 +9,7 @@ namespace eTaxSim.Simulation.SimulationStrategies.LiquidSalary.Util
 
         public Parameters(IDictionary<string, object> aParameters)
         {
-            this.MapParameters = aParameters;
+            MapParameters = aParameters;
         }
 
         public bool GetBool(string aKey)
@@ -17,10 +17,7 @@ namespace eTaxSim.Simulation.SimulationStrategies.LiquidSalary.Util
             dynamic mapValue = MapParameters[aKey];
             bool value;
 
-            if (mapValue.GetType() is bool)
-            {
-                return mapValue;
-            }
+            if (mapValue.GetType() is bool) return mapValue;
 
             try
             {
@@ -38,10 +35,7 @@ namespace eTaxSim.Simulation.SimulationStrategies.LiquidSalary.Util
         {
             dynamic mapValue = MapParameters[aKey];
 
-            if (mapValue.GetType() is double)
-            {
-                return mapValue;
-            }
+            if (mapValue.GetType() is double) return mapValue;
             double value = double.Parse(mapValue);
             return value;
         }
@@ -50,10 +44,7 @@ namespace eTaxSim.Simulation.SimulationStrategies.LiquidSalary.Util
         {
             dynamic mapValue = MapParameters[aKey];
 
-            if (mapValue.GetType() is int)
-            {
-                return mapValue;
-            }
+            if (mapValue.GetType() is int) return mapValue;
             int value = int.Parse(mapValue);
             return value;
         }
@@ -62,10 +53,7 @@ namespace eTaxSim.Simulation.SimulationStrategies.LiquidSalary.Util
         {
             dynamic mapValue = MapParameters[aKey];
 
-            if (mapValue.GetType() is string)
-            {
-                return mapValue;
-            }
+            if (mapValue.GetType() is string) return mapValue;
             string value = mapValue.ToString();
             return value;
         }
@@ -80,14 +68,14 @@ namespace eTaxSim.Simulation.SimulationStrategies.LiquidSalary.Util
                 myEnum = convertToTwelfths(mapValue);
                 return myEnum;
             }
+
             myEnum = convertToTwelfths(mapValue.ToString());
             return myEnum;
-
         }
 
         private Twelfths convertToTwelfths(string value)
         {
-            Twelfths myEnum = (Twelfths)Enum.Parse(typeof(Twelfths), value, true);
+            var myEnum = (Twelfths) Enum.Parse(typeof(Twelfths), value, true);
             return myEnum;
         }
     }

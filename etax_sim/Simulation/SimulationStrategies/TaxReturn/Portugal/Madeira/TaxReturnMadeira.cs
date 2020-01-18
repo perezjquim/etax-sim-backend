@@ -1,6 +1,4 @@
 ﻿namespace eTaxSim.Simulation.SimulationStrategies.TaxReturn.Portugal.Madeira
 {
-    public class TaxReturnMadeira
-    {
-    }
+    public class TaxReturnMadeira { }
 }

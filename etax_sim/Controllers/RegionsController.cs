@@ -1,8 +1,8 @@
-﻿using eTaxSim.Models;
+﻿using System.Collections.Generic;
+using System.Linq;
+using eTaxSim.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace eTaxSim.Controllers
 {
@@ -20,10 +20,9 @@ namespace eTaxSim.Controllers
         [HttpGet]
         public ActionResult<List<Region>> Get()
         {
-            var regions = _mContext.mRegions.Where(r => r.IsActive == true).Select(r => new
-            {
+            var regions = _mContext.mRegions.Where(r => r.IsActive).Select(r => new {
                 Region = r,
-                Companies = r.Companies.Where(c => c.IsActive == true)
+                Companies = r.Companies.Where(c => c.IsActive)
                 //Countries = r.Country.
             }).ToList();
 
@@ -35,10 +34,9 @@ namespace eTaxSim.Controllers
         [HttpGet("{aId}")]
         public ActionResult<Region> Get(int aId)
         {
-            var region = _mContext.mRegions.Where(r => r.Id == aId && r.IsActive == true).Select(r => new
-            {
+            var region = _mContext.mRegions.Where(r => r.Id == aId && r.IsActive).Select(r => new {
                 Region = r,
-                Companies = r.Companies.Where(c => c.IsActive == true)
+                Companies = r.Companies.Where(c => c.IsActive)
             }).First();
 
             if (region == null) return NotFound();
@@ -52,7 +50,7 @@ namespace eTaxSim.Controllers
             _mContext.mRegions.Add(aRegion);
             _mContext.SaveChanges();
 
-            return CreatedAtAction(nameof(Get), new { aRegion.Id }, aRegion);
+            return CreatedAtAction(nameof(Get), new {aRegion.Id}, aRegion);
         }
 
         [HttpPut("{aId}")]

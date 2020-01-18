@@ -1,12 +1,12 @@
-﻿using eTaxSim.Adapter;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using eTaxSim.Adapter;
 using eTaxSim.Models;
 using eTaxSim.Proxy;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace eTaxSim.Controllers
 {
@@ -34,10 +34,7 @@ namespace eTaxSim.Controllers
         {
             var strategy = await _context.mStrategy.FindAsync(id);
 
-            if (strategy == null)
-            {
-                return NotFound();
-            }
+            if (strategy == null) return NotFound();
 
             return strategy;
         }
@@ -46,10 +43,7 @@ namespace eTaxSim.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutStrategy(int id, Strategy strategy)
         {
-            if (id != strategy.Id)
-            {
-                return BadRequest();
-            }
+            if (id != strategy.Id) return BadRequest();
 
             _context.Entry(strategy).State = EntityState.Modified;
 
@@ -60,13 +54,8 @@ namespace eTaxSim.Controllers
             catch (DbUpdateConcurrencyException)
             {
                 if (!StrategyExists(id))
-                {
                     return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                throw;
             }
 
             return NoContent();
@@ -79,7 +68,7 @@ namespace eTaxSim.Controllers
             _context.mStrategy.Add(strategy);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetStrategy", new { id = strategy.Id }, strategy);
+            return CreatedAtAction("GetStrategy", new {id = strategy.Id}, strategy);
         }
 
         // POST: api/Strategies
@@ -88,13 +77,10 @@ namespace eTaxSim.Controllers
         {
             var strategy = _context.mStrategy.Where(s => s.Id == id && s.ImplementingClass != null).FirstOrDefault();
 
-            if (strategy == null)
-            {
-                return NotFound();
-            }
+            if (strategy == null) return NotFound();
             var body = form.ToDictionary(k => k.Key, v => v.Value);
 
-            StrategyProxy proxy = new StrategyProxy();
+            var proxy = new StrategyProxy();
             var strategyResult = proxy.OnRequest(body, strategy, _context, countryId, regionId);
             var properties = strategyResult.GetType().GetProperties();
             var resultType = properties[1].GetValue(strategyResult, null);
@@ -102,13 +88,13 @@ namespace eTaxSim.Controllers
             //if (strategyResult != null)
             if (resultType.Equals("S"))
             {
-                SimulAdapter simulAdapter = new SimulAdapter();
+                var simulAdapter = new SimulAdapter();
                 var simulInput = simulAdapter.OnAdapt(_context, strategy, countryId, regionId, body);
                 var result = simulInput.ExecuteSimulation();
                 return Ok(result);
             }
 
-            return BadRequest(new { type = resultType, msg = msg });
+            return BadRequest(new {type = resultType, msg});
         }
 
         // DELETE: api/Strategies/5
@@ -116,10 +102,7 @@ namespace eTaxSim.Controllers
         public async Task<ActionResult<Strategy>> DeleteStrategy(int id)
         {
             var strategy = await _context.mStrategy.FindAsync(id);
-            if (strategy == null)
-            {
-                return NotFound();
-            }
+            if (strategy == null) return NotFound();
 
             _context.mStrategy.Remove(strategy);
             await _context.SaveChangesAsync();

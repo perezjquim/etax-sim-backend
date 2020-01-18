@@ -1,8 +1,8 @@
+using System.Collections.Generic;
+using System.Linq;
 using eTaxSim.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace eTaxSim.Controllers
 {
@@ -21,12 +21,10 @@ namespace eTaxSim.Controllers
         [HttpGet]
         public ActionResult<List<Company>> Get()
         {
-            var list = mContext.mCompanies.Include("Roles").Include("Region").Include("Region.Country").Include("Sector").ToList();
+            var list = mContext.mCompanies.Include("Roles").Include("Region").Include("Region.Country")
+                .Include("Sector").ToList();
 
-            if (list == null)
-            {
-                return NotFound();
-            }
+            if (list == null) return NotFound();
 
             return Ok(list);
         }
@@ -36,10 +34,7 @@ namespace eTaxSim.Controllers
         public ActionResult<Country> Get(int aId)
         {
             var company = mContext.mCompanies.Find(aId);
-            if (company == null)
-            {
-                return NotFound();
-            }
+            if (company == null) return NotFound();
             mContext.Entry(company).Collection("Roles").Load();
             mContext.Entry(company).Reference("Region").Load();
             //falta adicionar aqui o Region.Country
@@ -53,17 +48,14 @@ namespace eTaxSim.Controllers
         {
             mContext.mCompanies.Add(aCompany);
             mContext.SaveChanges();
-            return CreatedAtAction(nameof(Get), new { Id = aCompany.Id }, aCompany);
+            return CreatedAtAction(nameof(Get), new {aCompany.Id}, aCompany);
         }
 
         // PUT api/companies/5
         [HttpPut("{aId}")]
         public ActionResult<Company> Put(int aId, Company aCompany)
         {
-            if (aId != aCompany.Id)
-            {
-                return BadRequest();
-            }
+            if (aId != aCompany.Id) return BadRequest();
 
             mContext.Entry(aCompany).State = EntityState.Modified;
             mContext.SaveChanges();
@@ -77,10 +69,7 @@ namespace eTaxSim.Controllers
         {
             var company = mContext.mCompanies.Find(aId);
 
-            if (company == null)
-            {
-                return NotFound();
-            }
+            if (company == null) return NotFound();
 
             mContext.mCompanies.Remove(company);
             mContext.SaveChanges();

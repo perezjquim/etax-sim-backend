@@ -20,8 +20,7 @@ namespace eTaxSim.Models
 
         public Region Region { get; set; }
 
-        [ForeignKey(nameof(StrategyId))]
-        public Strategy Strategy { get; set; }
+        [ForeignKey(nameof(StrategyId))] public Strategy Strategy { get; set; }
 
         public StrategyByCountry StrategyByCountry { get; set; }
     }

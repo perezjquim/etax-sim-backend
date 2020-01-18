@@ -2,16 +2,16 @@
 {
     internal class LiquidSalarySpainCalculator
     {
-        public LiquidSalarySpainModel Model { get; set; }
-
         public LiquidSalarySpainCalculator(LiquidSalarySpainModel aModel)
         {
-            this.Model = aModel;
+            Model = aModel;
         }
+
+        public LiquidSalarySpainModel Model { get; set; }
 
         public void Calculate()
         {
-            double result = (Model.BaseSalary * Model.NumberSalary) / 12;
+            var result = Model.BaseSalary * Model.NumberSalary / 12;
             Model.LiquidSalary = result;
         }
     }

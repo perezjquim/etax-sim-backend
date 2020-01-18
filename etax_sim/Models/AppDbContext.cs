@@ -23,7 +23,5 @@ namespace eTaxSim.Models
 
         public DbSet<RuleAllowedValue> mRuleAllowedValue { get; set; }
         public DbSet<ParamAllowedValue> mParamAllowedValue { get; set; }
-
-
     }
 }

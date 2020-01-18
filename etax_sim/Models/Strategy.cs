@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -10,10 +9,9 @@ namespace eTaxSim.Models
     {
         [Key] [Column("ID")] public int Id { get; set; }
 
-        [Column("Name")] public String Name { get; set; }
-        [Column("ImplementingClass")] public String ImplementingClass { get; set; }
+        [Column("Name")] public string Name { get; set; }
+        [Column("ImplementingClass")] public string ImplementingClass { get; set; }
 
         public ICollection<ParamByStrategy> ParamByStrategy { get; set; }
-
     }
 }

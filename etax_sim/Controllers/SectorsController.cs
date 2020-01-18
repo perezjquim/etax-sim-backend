@@ -1,9 +1,9 @@
-﻿using eTaxSim.Models;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using eTaxSim.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace eTaxSim.Controllers
 {
@@ -32,10 +32,7 @@ namespace eTaxSim.Controllers
             var sector = await _context.mSectors.FindAsync(id);
             await _context.Entry(sector).Collection("Companies").LoadAsync();
 
-            if (sector == null)
-            {
-                return NotFound();
-            }
+            if (sector == null) return NotFound();
 
             return sector;
         }
@@ -44,10 +41,7 @@ namespace eTaxSim.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutSector(int id, Sector sector)
         {
-            if (id != sector.Id)
-            {
-                return BadRequest();
-            }
+            if (id != sector.Id) return BadRequest();
 
             _context.Entry(sector).State = EntityState.Modified;
 
@@ -58,13 +52,8 @@ namespace eTaxSim.Controllers
             catch (DbUpdateConcurrencyException)
             {
                 if (!SectorExists(id))
-                {
                     return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                throw;
             }
 
             return NoContent();
@@ -77,7 +66,7 @@ namespace eTaxSim.Controllers
             _context.mSectors.Add(sector);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetSector", new { id = sector.Id }, sector);
+            return CreatedAtAction("GetSector", new {id = sector.Id}, sector);
         }
 
         // DELETE: api/Sectors/5
@@ -85,10 +74,7 @@ namespace eTaxSim.Controllers
         public async Task<ActionResult<Sector>> DeleteSector(int id)
         {
             var sector = await _context.mSectors.FindAsync(id);
-            if (sector == null)
-            {
-                return NotFound();
-            }
+            if (sector == null) return NotFound();
 
             _context.mSectors.Remove(sector);
             await _context.SaveChangesAsync();

@@ -1,8 +1,8 @@
-﻿using eTaxSim.Models;
+﻿using System.Collections.Generic;
+using System.Linq;
+using eTaxSim.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace eTaxSim.Controllers
 {
@@ -21,16 +21,12 @@ namespace eTaxSim.Controllers
         [HttpGet]
         public ActionResult<List<Country>> Get()
         {
-            var list = _mContext.mCountries.Where(c => c.IsActive == true).Select(c => new
-            {
+            var list = _mContext.mCountries.Where(c => c.IsActive).Select(c => new {
                 Country = c,
-                Regions = c.Regions.Where(r => r.IsActive == true)
+                Regions = c.Regions.Where(r => r.IsActive)
             }).ToList();
 
-            if (list.Count < 1)
-            {
-                return NotFound();
-            }
+            if (list.Count < 1) return NotFound();
 
             return Ok(list);
         }
@@ -39,10 +35,9 @@ namespace eTaxSim.Controllers
         [HttpGet("{aId}")]
         public ActionResult<Country> Get(int aId)
         {
-            var country = _mContext.mCountries.Where(c => c.Id == aId && c.IsActive == true).Select(Country => new
-            {
+            var country = _mContext.mCountries.Where(c => c.Id == aId && c.IsActive).Select(Country => new {
                 Country,
-                Regions = Country.Regions.Where(r => r.IsActive == true)
+                Regions = Country.Regions.Where(r => r.IsActive)
             }).First();
             if (country == null) return NotFound();
 
@@ -55,7 +50,7 @@ namespace eTaxSim.Controllers
         {
             _mContext.mCountries.Add(aCountry);
             _mContext.SaveChanges();
-            return CreatedAtAction(nameof(Get), new { Id = aCountry.Id }, aCountry);
+            return CreatedAtAction(nameof(Get), new {aCountry.Id}, aCountry);
         }
 
         // PUT api/countries/5

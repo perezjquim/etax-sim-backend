@@ -11,6 +11,5 @@ namespace eTaxSim.Models
         [Column("MinValue")] public double? MinValue { get; set; }
 
         [Column("MaxValue")] public double? MaxValue { get; set; }
-
     }
 }

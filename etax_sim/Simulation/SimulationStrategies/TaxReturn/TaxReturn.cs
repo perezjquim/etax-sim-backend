@@ -1,6 +1,7 @@
-﻿using eTaxSim.Models;
-using eTaxSim.Simulation.Model;
+﻿using System;
 using System.Collections.Generic;
+using eTaxSim.Models;
+using eTaxSim.Simulation.Model;
 
 namespace eTaxSim.Simulation.SimulationStrategies.TaxReturn
 {
@@ -12,12 +13,13 @@ namespace eTaxSim.Simulation.SimulationStrategies.TaxReturn
 
         public ResponseResult Execute()
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
-        public void SetStrategyParameters(Country aCountry, Region aRegion, IDictionary<string, object> aParametersDictionary)
+        public void SetStrategyParameters(Country aCountry, Region aRegion,
+            IDictionary<string, object> aParametersDictionary)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
     }
 }

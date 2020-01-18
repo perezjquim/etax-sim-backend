@@ -1,9 +1,9 @@
-﻿using eTaxSim.Models;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using eTaxSim.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace etax_sim.Controllers
 {
@@ -27,18 +27,16 @@ namespace etax_sim.Controllers
 
         // GET: api/StrategyByCountryByRegions/country/region/5/6
         [HttpGet("country/region/{countryId}/{regionId}")]
-        public async Task<ActionResult<IEnumerable<object>>> GetmStrategyByCountryByRegionId(int countryId, int regionId)
+        public async Task<ActionResult<IEnumerable<object>>> GetmStrategyByCountryByRegionId(int countryId,
+            int regionId)
         {
-            var exceptions = await _context.mStrategyByCountryByRegion.Where(s => s.CountryId == countryId).Where(s => s.RegionId == regionId).Include("Strategy").ToListAsync();
+            var exceptions = await _context.mStrategyByCountryByRegion.Where(s => s.CountryId == countryId)
+                .Where(s => s.RegionId == regionId).Include("Strategy").ToListAsync();
             if (exceptions.Count < 1)
-            {
                 //get general strategies
-                return await _context.mStrategyByCountry.Where(s => s.CountryId == countryId).Include("Strategy").ToListAsync();
-            }
-            else
-            {
-                return exceptions;
-            }
+                return await _context.mStrategyByCountry.Where(s => s.CountryId == countryId).Include("Strategy")
+                    .ToListAsync();
+            return exceptions;
         }
 
         // GET: api/StrategyByCountryByRegions/5
@@ -47,22 +45,17 @@ namespace etax_sim.Controllers
         {
             var strategyByCountryByRegion = await _context.mStrategyByCountryByRegion.FindAsync(id);
 
-            if (strategyByCountryByRegion == null)
-            {
-                return NotFound();
-            }
+            if (strategyByCountryByRegion == null) return NotFound();
 
             return strategyByCountryByRegion;
         }
 
         // PUT: api/StrategyByCountryByRegions/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutStrategyByCountryByRegion(int id, StrategyByCountryByRegion strategyByCountryByRegion)
+        public async Task<IActionResult> PutStrategyByCountryByRegion(int id,
+            StrategyByCountryByRegion strategyByCountryByRegion)
         {
-            if (id != strategyByCountryByRegion.Id)
-            {
-                return BadRequest();
-            }
+            if (id != strategyByCountryByRegion.Id) return BadRequest();
 
             _context.Entry(strategyByCountryByRegion).State = EntityState.Modified;
 
@@ -73,13 +66,8 @@ namespace etax_sim.Controllers
             catch (DbUpdateConcurrencyException)
             {
                 if (!StrategyByCountryByRegionExists(id))
-                {
                     return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                throw;
             }
 
             return NoContent();
@@ -87,12 +75,14 @@ namespace etax_sim.Controllers
 
         // POST: api/StrategyByCountryByRegions
         [HttpPost]
-        public async Task<ActionResult<StrategyByCountryByRegion>> PostStrategyByCountryByRegion(StrategyByCountryByRegion strategyByCountryByRegion)
+        public async Task<ActionResult<StrategyByCountryByRegion>> PostStrategyByCountryByRegion(
+            StrategyByCountryByRegion strategyByCountryByRegion)
         {
             _context.mStrategyByCountryByRegion.Add(strategyByCountryByRegion);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetStrategyByCountryByRegion", new { id = strategyByCountryByRegion.Id }, strategyByCountryByRegion);
+            return CreatedAtAction("GetStrategyByCountryByRegion", new {id = strategyByCountryByRegion.Id},
+                strategyByCountryByRegion);
         }
 
         // DELETE: api/StrategyByCountryByRegions/5
@@ -100,10 +90,7 @@ namespace etax_sim.Controllers
         public async Task<ActionResult<StrategyByCountryByRegion>> DeleteStrategyByCountryByRegion(int id)
         {
             var strategyByCountryByRegion = await _context.mStrategyByCountryByRegion.FindAsync(id);
-            if (strategyByCountryByRegion == null)
-            {
-                return NotFound();
-            }
+            if (strategyByCountryByRegion == null) return NotFound();
 
             _context.mStrategyByCountryByRegion.Remove(strategyByCountryByRegion);
             await _context.SaveChangesAsync();

@@ -1,25 +1,26 @@
-﻿using eTaxSim.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Text;
+using eTaxSim.Models;
+using log4net;
 
 namespace eTaxSim.Simulation.SimulationStrategies.Creation
 {
     public class StrategyCreator
     {
-        private readonly AppDbContext _context;
-
         private const string BASE_NAMESPACE = "eTaxSim.Simulation.SimulationStrategies";
-        private static readonly log4net.ILog logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        private static readonly ILog logger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        private readonly AppDbContext _context;
 
         public StrategyCreator(AppDbContext aContext)
         {
-            this._context = aContext;
+            _context = aContext;
         }
 
-        public IStrategy FactoryMethod(Country aCountry, Region aRegion, Strategy aStrategy, IDictionary<string, object> aParametersDictionary)
+        public IStrategy FactoryMethod(Country aCountry, Region aRegion, Strategy aStrategy,
+            IDictionary<string, object> aParametersDictionary)
         {
-
             var strategy = FindImplementClass(aStrategy.ImplementingClass, aCountry, aRegion);
 
 
@@ -38,8 +39,7 @@ namespace eTaxSim.Simulation.SimulationStrategies.Creation
             try
             {
                 var type = Type.GetType(completePath);
-                myObject = (IStrategy)Activator.CreateInstance(type);
-
+                myObject = (IStrategy) Activator.CreateInstance(type);
             }
             catch (Exception)
             {
@@ -53,8 +53,7 @@ namespace eTaxSim.Simulation.SimulationStrategies.Creation
                     completePath = CreateCompletePath(BASE_NAMESPACE, strategyPath, className);
 
                     var type = Type.GetType(completePath);
-                    myObject = (IStrategy)Activator.CreateInstance(type);
-
+                    myObject = (IStrategy) Activator.CreateInstance(type);
                 }
                 catch (Exception e)
                 {
@@ -77,13 +76,10 @@ namespace eTaxSim.Simulation.SimulationStrategies.Creation
 
         private string CreateStrategyPath(string aClassName, string aCountry, string aRegion)
         {
-            StringBuilder strategyPath = new StringBuilder(aClassName);
+            var strategyPath = new StringBuilder(aClassName);
             strategyPath.Append(".").Append(aCountry);
 
-            if (!string.IsNullOrEmpty(aRegion))
-            {
-                strategyPath.Append(".").Append(aRegion);
-            }
+            if (!string.IsNullOrEmpty(aRegion)) strategyPath.Append(".").Append(aRegion);
             return strategyPath.ToString();
         }
 
