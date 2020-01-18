@@ -1,3 +1,4 @@
+
 ![image](images/misc-images/icon.png)
 
 Introdução
@@ -94,7 +95,7 @@ utilizador final. Além disso, o back-end tratará de utilizar a base de
 dados para fins de configurações e logs das simulações.
 
 ![Solução -
-*overview*](images/diagramas-geral/solucao-overview.png){width="\\linewidth"}
+*overview*](images/diagramas-geral/solucao-overview.png)
 
 Base de dados
 -------------
@@ -109,7 +110,7 @@ no sistema).
 A base de dados montada pode ser representada da seguinte forma:
 
 ![Base de dados - esquema
-relacional](images/base-de-dados/esq-rel.png){width="\\linewidth"}
+relacional](images/base-de-dados/esq-rel.png)
 
 Em primeiro lugar, no que toca à configuração, através das tabelas
 **Country** e **Region**, é possível configurar quais os países (e as
@@ -144,25 +145,25 @@ líquido).
 
 Sucintamente, a base de dados pode ser descrita da seguinte forma:
 
-  **Nome da tabela**                   **Descrição/Objetivo**
-  ------------------------------------ ----------------------------------------------------------------------------------
-  Country                              Configuração - Países
-  Region                               Configuração - Regiões
-  Strategy                             Configuração - Simulações
-  ParamByStrategy                      Configuração - Simulações - Parâmetros
-  StrategyParamRule                    Configuração - Parâmetros - Regras
-  RuleAllowedValues                    Configuração - Valores permitidos
-  ParamAllowedValues                   Configuração - Parâmetros - Valores permitidos
-  StrategyByCountry                    Configuração - Países - Simulações
-  StrategyByCountryByRegion            Configuração - Regiões - Simulações
-  SimulationLog                        Logs - Simulações
-  SimulationLogParam                   Logs - Simulações (parâmetros introduzidos)
-  *\_\_CALC\_PT\_IRS\_TRAB\_DEP\_\_*   *Tabela auxiliar - Cálculo da taxa de IRS (com base no trabalho dependente)*
-  *\_\_CALC\_PT\_IRS\_PENS\_\_*        *Tabela auxiliar - Cálculo da taxa de IRS (com base nos rendimentos de pensões)*
-  Role                                 Registo - Roles (cargos) numa dada empresa
-  Company                              Registo - Empresas
-  Sector                               Configuração - Setores
-  *\_\_EFMigrationHistory*             *Tabela gerada pelo back-end (para fins de migrações)*
+  |**Nome da tabela**|                   **Descrição/Objetivo**|
+  |------------------------------------| ----------------------------------------------------------------------------------|
+  |Country|                              |Configuração - Países|
+  |Region                               |Configuração - Regiões|
+  |Strategy                             |Configuração - Simulações|
+  |ParamByStrategy                      |Configuração - Simulações - Parâmetros|
+  |StrategyParamRule                    |Configuração - Parâmetros - Regras|
+  |RuleAllowedValues                    |Configuração - Valores permitidos|
+  |ParamAllowedValues                   |Configuração - Parâmetros - Valores permitidos|
+  |StrategyByCountry                    |Configuração - Países - Simulações|
+  |StrategyByCountryByRegion            |Configuração - Regiões - Simulações|
+  |SimulationLog                        |Logs - Simulações|
+  |SimulationLogParam                   |Logs - Simulações (parâmetros introduzidos)|
+  |*\_\_CALC\_PT\_IRS\_TRAB\_DEP\_\_*   |*Tabela auxiliar - Cálculo da taxa de IRS (com base no trabalho dependente)*|
+  |*\_\_CALC\_PT\_IRS\_PENS\_\_*        |*Tabela auxiliar - Cálculo da taxa de IRS (com base nos rendimentos de pensões)*|
+  |Role                                 |Registo - Roles (cargos) numa dada empresa|
+  |Company                              |Registo - Empresas|
+  |Sector                               |Configuração - Setores|
+  |*\_\_EFMigrationHistory*             |*Tabela gerada pelo back-end (para fins de migrações)*|
 
 Back-end
 --------
@@ -193,8 +194,7 @@ padrões de desenho, nomeadamente **Strategy**, **Factory**, **Proxy** e
 **Adapter**, tal como podemos conferir na seguinte imagem.
 
 ![Back-end - classes
-*core*](images/back-end/classes-core.png){width="\\linewidth"}
-
+*core*](images/back-end/classes-core.png)
 #### Padrões utilizados
 
 -   **Factory** - Utilizado para isolar toda a lógica de gestão e
@@ -224,7 +224,7 @@ respetivas de cada entidade (métodos GET, POST, PUT, DELETE), seguindo a
 seguinte estrutura:
 
 ![Back-end - API
-controllers](images/back-end/api-controllers.png){width="\\linewidth"}
+controllers](images/back-end/api-controllers.png)
 
 #### Principais rotas
 
@@ -262,19 +262,19 @@ geralmente, o fluxo do seu funcionamento poderá ser ilustrado da
 seguinte forma:
 
 ![Seleção do
-país](images/front-end/fluxo/f1.png){height=".85\\linewidth"}
+país](images/front-end/fluxo/f1.png)
 
 ![Seleção da
-região](images/front-end/fluxo/f2.png){height=".85\\linewidth"}
+região](images/front-end/fluxo/f2.png)
 
 ![Seleção da
-simulação](images/front-end/fluxo/f3.png){height=".85\\linewidth"}
+simulação](images/front-end/fluxo/f3.png)
 
 ![Preenchimento e submissão dos dados de entrada para a
-simulação](images/front-end/fluxo/f4.png){height="\\linewidth"}
+simulação](images/front-end/fluxo/f4.png)
 
 ![Apresentação dos resultados da
-simulação](images/front-end/fluxo/f5.png){height="\\linewidth"}
+simulação](images/front-end/fluxo/f5.png)
 
 Em termos da construção das vistas relativas às simulações propriamente
 ditas, temos dois tipos: os **ecrãs de seleção** (nos quais o utilizador
@@ -287,12 +287,12 @@ de seleção, e as restantes views correspondem aos ecrãs com os
 formulários destinados para as simulações (pelo que se encontra o
 respetivo id da simulação no nome da mesma).
 
-![Diretorias](images/front-end/views-struct.png){height=".85\\linewidth"}
+![Diretorias](images/front-end/views-struct.png)
 
 ![Ecrã de
-seleção](images/front-end/fluxo/f3.png){height=".85\\linewidth"}
+seleção](images/front-end/fluxo/f3.png)
 
-![Formulário](images/front-end/fluxo/f4.png){height=".85\\linewidth"}
+![Formulário](images/front-end/fluxo/f4.png)
 
 Felizmente, o front-end encontra-se preparado para facilmente aceitar as
 necessidades que forem surgindo, na medida em que basta serem
@@ -369,7 +369,8 @@ trabalho futuro. Assim sendo, os pontos a destacar são os seguintes:
 -   Permitir ligação dos dados introduzidos a uma dada empresa e cargo
     nessa empresa (se aplicável - p.ex. no cálculo do salário líquido)
 
-9
+Referencias
+=========================
 
 *Desenho e Implementação de Software*,
 https://moodle.cee.uma.pt/course/view.php?id=61
