@@ -10,7 +10,6 @@ namespace eTaxSim.Models
         [Key] [Column("ID")] public int Id { get; set; }
 
         [Column("Value")] public string Value { get; set; }
-        //public StrategyParamRule StrategyParamRule { get; set; }
         public ICollection<ParamAllowedValue> ParamAllowedValue { get; set; }
     }
 }

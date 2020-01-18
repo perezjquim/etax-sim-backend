@@ -9,8 +9,6 @@ namespace eTaxSim.Simulation.SimulationStrategies.TaxReturn
         public Country Country { get; set; }
         public Region Region { get; set; }
 
-        //public Strategy;
-
 
         public ResponseResult Execute()
         {

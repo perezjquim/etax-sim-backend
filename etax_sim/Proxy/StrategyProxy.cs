@@ -13,10 +13,9 @@ namespace eTaxSim.Proxy
             //verify strategy params name and value
             var strategyParams = this.CheckIfHaveParent(aStrategy.Id, aCountryId, aRegionId, aContext);
             var paramsCheck = this.VerifyStrategyParams(strategyParams, aContext, aParameters);
-            //var strategyParams = this.GetStrategyParams(aStrategy, aContext);
-            //var paramsCheck = this.VerifyStrategyParams(strategyParams.Value.ParamByStrategy, aContext, aParameters);
+
             var properties = paramsCheck.GetType().GetProperties();
-            //if(paramsCheck == true)
+
             var type = properties[0].GetValue(paramsCheck, null);
             var msg = properties[1].GetValue(paramsCheck, null);
             if (type.Equals("S"))
@@ -24,32 +23,11 @@ namespace eTaxSim.Proxy
                 return new { strategy = strategyParams, type = type, msg = msg };
             }
             return new { strategy = (object)null, type = type, msg = msg };
-            //return null;
         }
-
-        /*public ActionResult<Strategy> GetStrategyParams(Strategy aStrategy, AppDbContext aContext)
-        {
-            aContext.Entry(aStrategy).Collection("ParamByStrategy").Load();
-            foreach (ParamByStrategy param in aStrategy.ParamByStrategy)
-            {
-                aContext.Entry(param).Reference("StrategyParamRule").Load();
-            }
-            foreach (ParamByStrategy param in aStrategy.ParamByStrategy)
-            {
-                aContext.Entry(param).Collection("ParamAllowedValue").Load();
-                foreach (ParamAllowedValue paramValue in param.ParamAllowedValue)
-                {
-                    aContext.Entry(paramValue).Reference("RuleAllowedValue").Load();
-                }
-            }
-            //aContext.Entry(strategy).Collection("ParamByStrategy.StrategyParamRule").Load();
-            return aStrategy;
-        }*/
 
         public ICollection<ParamByStrategy> CheckIfHaveParent(int aStrategyId, int aCountryId, int aRegionId, AppDbContext aContext)
         {
             var childStrategy = aContext.mStrategyByCountryByRegion.Where(s => s.StrategyId == aStrategyId && s.CountryId == aCountryId && s.RegionId == aRegionId).
-                //Include("Strategy.ParamByStrategy.StrategyParamRule.ParamAllowedValue.RuleAllowedValue").
                 FirstOrDefault();
             ICollection<ParamByStrategy> childParameters = null;
             if (childStrategy != null)
@@ -57,25 +35,6 @@ namespace eTaxSim.Proxy
                 aContext.Entry(childStrategy).Reference("Strategy").Load();
                 aContext.Entry(childStrategy.Strategy).Collection("ParamByStrategy").Load();
                 childParameters = this.GetParamsData(childStrategy.Strategy.ParamByStrategy, aContext);
-                /*foreach (ParamByStrategy paramByStrategy in childStrategy.Strategy.ParamByStrategy)
-                {
-                    if(paramByStrategy.IsInput == true)
-                    {
-                        aContext.Entry(paramByStrategy).Reference("StrategyParamRule").Load();
-                    }
-                    else
-                    {
-                        childStrategy.Strategy.ParamByStrategy.Remove(paramByStrategy);
-                    }
-                }
-                foreach (ParamByStrategy paramByStrategy in childStrategy.Strategy.ParamByStrategy)
-                {
-                    aContext.Entry(paramByStrategy).Collection("ParamAllowedValue").Load();
-                    foreach (ParamAllowedValue paramAllowedValue in paramByStrategy.ParamAllowedValue)
-                    {
-                        aContext.Entry(paramAllowedValue).Reference("RuleAllowedValue").Load();
-                    }
-                }*/
             }
             //get parent strategy
             int parentStrategyId;
@@ -88,7 +47,6 @@ namespace eTaxSim.Proxy
             {
                 parentStrategyId = aStrategyId;
             }
-            //var parentId = childStrategy == null ? aStrategyId : childStrategy.StrategyByCountry.StrategyId;
 
             var parentStrategy = aContext.mStrategyByCountry.Where(s => s.StrategyId == parentStrategyId && s.CountryId == aCountryId).FirstOrDefault();
             ICollection<ParamByStrategy> parentParameters = null;
@@ -97,34 +55,9 @@ namespace eTaxSim.Proxy
                 aContext.Entry(parentStrategy).Reference("Strategy").Load();
                 aContext.Entry(parentStrategy.Strategy).Collection("ParamByStrategy").Load();
                 parentParameters = this.GetParamsData(parentStrategy.Strategy.ParamByStrategy, aContext);
-                /*foreach (ParamByStrategy paramByStrategy in parentStrategy.Strategy.ParamByStrategy)
-                {
-                    if(paramByStrategy.IsInput == true)
-                    {
-                        aContext.Entry(paramByStrategy).Reference("StrategyParamRule").Load();
-                    }
-                    else
-                    {
-                        parentStrategy.Strategy.ParamByStrategy.Remove(paramByStrategy);
-                    }
-                }
-                foreach (ParamByStrategy paramByStrategy in parentStrategy.Strategy.ParamByStrategy)
-                {
-                    aContext.Entry(paramByStrategy).Collection("ParamAllowedValue").Load();
-                    foreach (ParamAllowedValue paramAllowedValue in paramByStrategy.ParamAllowedValue)
-                    {
-                        aContext.Entry(paramAllowedValue).Reference("RuleAllowedValue").Load();
-                    }
-                }*/
+
             }
-            /*var parameters = parentStrategy.Strategy.ParamByStrategy;
-            if (childStrategy != null)
-            { 
-                foreach (ParamByStrategy param in childStrategy.Strategy.ParamByStrategy)
-                {
-                    parameters.Add(param);
-                }
-            }*/
+
             var parameters = parentParameters;
             if (childParameters != null)
             {
@@ -175,7 +108,6 @@ namespace eTaxSim.Proxy
                 var param = paramsEnum.Current;
                 if (aParameters.ContainsKey(param.ParamName))
                 {
-                    //var rule = param.StrategyParamRule;
                     if (aParameters.TryGetValue(param.ParamName, out StringValues values))
                     {
 
@@ -189,7 +121,6 @@ namespace eTaxSim.Proxy
                                 var result = this.VerifyRule(rule.MinValue, rule.MaxValue, inputValue);
                                 if (result == false)
                                 {
-                                    //return false;
                                     return new { type = "E", msg = "InvalidParameterValue" };
                                 }
                             }
@@ -206,17 +137,14 @@ namespace eTaxSim.Proxy
                     }
                     else
                     {
-                        //return false;
                         return new { type = "E", msg = "InvalidParameterValue" };
                     }
                 }
                 else
                 {
-                    //return false;
                     return new { type = "E", msg = "MissingParameters" };
                 }
             }
-            //return true;
             return new { type = "S", msg = "ValidParameters" };
         }
 

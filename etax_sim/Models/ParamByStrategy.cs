@@ -12,11 +12,7 @@ namespace eTaxSim.Models
 
         [Column("StrategyId")] public int StrategyId { get; set; }
 
-        //[Column("SimulationParamRuleId")] public int SimulationParamRuleId { get; set; }
-
         [Column("ParamName")] public String ParamName { get; set; }
-
-        //[Column("ParamValue")] public double ParamValue { get; set; }
 
         [Column("IsInput")] public bool IsInput { get; set; }
 

@@ -88,15 +88,12 @@ namespace eTaxSim.Controllers
         {
             var strategy = _context.mStrategy.Where(s => s.Id == id && s.ImplementingClass != null).FirstOrDefault();
 
-            //_context.Entry(strategy).Collection("ParamByStrategy").Load();
-
-            //var strategy = _context.mStrategy.Where(s => s.Id == id).Include("").FirstOrDefault();
             if (strategy == null)
             {
                 return NotFound();
             }
             var body = form.ToDictionary(k => k.Key, v => v.Value);
-            //var body = form.ToList();
+
             StrategyProxy proxy = new StrategyProxy();
             var strategyResult = proxy.OnRequest(body, strategy, _context, countryId, regionId);
             var properties = strategyResult.GetType().GetProperties();
@@ -110,9 +107,8 @@ namespace eTaxSim.Controllers
                 var result = simulInput.ExecuteSimulation();
                 return Ok(result);
             }
-            //enviar mensagem de erro.
+
             return BadRequest(new { type = resultType, msg = msg });
-            //return strategyResult;
         }
 
         // DELETE: api/Strategies/5

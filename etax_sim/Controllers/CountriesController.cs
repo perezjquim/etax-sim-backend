@@ -21,7 +21,6 @@ namespace eTaxSim.Controllers
         [HttpGet]
         public ActionResult<List<Country>> Get()
         {
-            //Where(c => c.Regions.Any(r => r.IsActive == true))
             var list = _mContext.mCountries.Where(c => c.IsActive == true).Select(c => new
             {
                 Country = c,
@@ -47,7 +46,6 @@ namespace eTaxSim.Controllers
             }).First();
             if (country == null) return NotFound();
 
-            //_mContext.Entry(country).Collection("Regions").Load();
             return Ok(country);
         }
 

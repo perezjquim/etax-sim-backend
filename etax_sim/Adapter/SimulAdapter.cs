@@ -25,7 +25,6 @@ namespace eTaxSim.Adapter
             foreach (KeyValuePair<string, StringValues> param in aInputParameters)
             {
                 var value = param.Value.ToArray()[0];
-                //KeyValuePair<string, string> paramater = new KeyValuePair<string, string>(param.Key,value);
                 inputParamsResult.Add(param.Key, value);
             }
             return inputParamsResult;
